@@ -5,7 +5,7 @@ class ExitValue:
   def __init__(self, time: int, status: str):
     self.time = time
     self.status = status
-class InputData:
+class RawData:
   def __init__(self, path: str, stats, exit: ExitValue):
     self.path = path
     self.stats = stats
@@ -14,19 +14,20 @@ class InputData:
 # Variables
 commit = '13a4c1dca0dd58d62acc741866fb945f3fe81592'
 rawData = [
-  InputData(
-    "filepath",
-    [
-      {
-        "bound":9,
-        "time":0
-      },
-      {
-        "bound":12,
-        "time":2
-      },
-    ],
-    ExitValue(3, "terminated"),
+  RawData(
+    "/home/evaluation/evaluation/pub/bench/XCSP18/CrosswordDesign/CrosswordDesign-03-4-rom_c18",
+    [{"bound":9,"time":0},{"bound":12,"time":0}],
+    ExitValue(0, "terminated"),
+  ),
+  RawData(
+    "/home/evaluation/evaluation/pub/bench/XCSP18/CrosswordDesign/CrosswordDesign-04-4-rom_c18",
+    [{"bound":24,"time":0}],
+    ExitValue(1, "terminated"),
+  ),
+  RawData(
+    "/home/evaluation/evaluation/pub/bench/XCSP18/CrosswordDesign/CrosswordDesign-07-4-rom_c18",
+    [],
+    ExitValue(-1, "failed"),
   ),
 ]
 inputData = [
