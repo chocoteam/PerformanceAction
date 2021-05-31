@@ -19,8 +19,8 @@ class Diff:
     self.diff = diff
     self.variation = variation
 class TestResult:
-  def __init__(self, exit: ExitValue, diffs: List[Diff]):
-    self.exit = exit
+  def __init__(self, exit_diff: Diff, diffs: List[Diff]):
+    self.exit_diff = exit_diff
     self.diffs = diffs
 
 # Variables
@@ -52,15 +52,15 @@ processed_data = {
   "XCSP18": {
     "CrosswordDesign": {
       "CrosswordDesign-03-4-rom_c18": TestResult(
-        ExitValue(0, "terminated"),
+        Diff("Exit value", 0, 0, 0, 0),
         []
       ),
       "CrosswordDesign-04-4-rom_c18": TestResult(
-        ExitValue(1, "terminated"),
+        Diff("Exit value", 1, 1, 0, 0),
         []
       ),
       "CrosswordDesign-07-4-rom_c18": TestResult(
-        ExitValue(-1, "failed"),
+        Diff("Exit value", -1, -1, 0, 0),
         []
       ),
     },
@@ -104,17 +104,32 @@ description: >
   Results are compared with [`{commit[0:7]}`](https://github.com/chocoteam/choco-solver/commit/{commit}).
 ---''')
 
-# Write headings
+# Writes test results to the file
+def write_test_result(result: TestResult):
+  diff = result.exit_diff
+
+  # Write value
+  file.write(f'\n\n**{diff.label}:** {diff.value}')
+  # Write variation
+  if diff.diff == 0:
+    file.write(f' [=]')
+  else:
+    sign = '-' if diff.diff < 0 else '+'
+    file.write(f' ({sign}{diff.diff} / {sign}{diff.variation}%)')
+
+  file.write(f'\n\n<!-- TODO: Write test results diff -->')
+  # TODO: Write test results diff
+
+# Writes headings to the file
 def write_content(path_component: str, level: int, content):
   file.write(f'\n\n{"#" * level} {path_component}')
   if isinstance(content, TestResult):
-    file.write(f'\n\n<!-- TODO: Write test results diff -->')
-    # TODO: Write test results diff (call function)
+    write_test_result(content)
   else:
     for key, value in content.items():
       write_content(key, level + 1, value)
 
-# Write data
+# Create file content
 for key, value in processed_data.items():
   write_content(key, 2, value)
 
