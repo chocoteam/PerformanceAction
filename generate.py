@@ -117,6 +117,12 @@ def write_test_result(result: TestResult):
     sign = '-' if diff.diff < 0 else '+'
     file.write(f' ({sign}{diff.diff} / {sign}{diff.variation}%)')
 
+  # Write diff table
+  file.write(f'''\n\nEvolution of last results:
+
+| Measure | Reference | Value | Variation |
+| ------- | --------- | ----- | --------- |''')
+
   file.write(f'\n\n<!-- TODO: Write test results diff -->')
   # TODO: Write test results diff
 
