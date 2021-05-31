@@ -85,9 +85,15 @@ description: >
   Results are compared with [`{commit[0:7]}`](https://github.com/chocoteam/choco-solver/commit/{commit}).
 ---''')
 
+# Write headings
+def write_content(path_component: str, level: int, content):
+  file.write(f'\n\n{"#" * level} {path_component}')
+  for key, value in content.items():
+    write_content(key, level + 1, value)
+
 # Write data
 for key, value in processedData.items():
-  file.write(f'\n\n## {key}')
+  write_content(key, 2, value)
 
 # Write trailing new line
 file.write('\n')
