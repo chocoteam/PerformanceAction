@@ -36,6 +36,7 @@ class InputData:
 tests_output_file_name: str = 'optimization.out'
 commit1: str = '13a4c1dca0dd58d62acc741866fb945f3fe81592'
 commit2: str = '614c0134750071ffe08dc376e9cc8caf210974bf'
+output_file_folder: str = '../pages/'
 input_data = InputData(
   Metadata(
     '/home/evaluation/evaluation/pub/bench/',
@@ -109,7 +110,8 @@ for test_result in input_data.results:
 
 # Open file
 output_file_name = os.path.splitext(tests_output_file_name)[0]+'.md'
-file = open(output_file_name, "w")
+output_file_path = os.path.join(output_file_folder, output_file_name)
+file = open(output_file_path, "w")
 
 # Write Front Matter
 file.write(f'''---
