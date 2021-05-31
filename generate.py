@@ -25,23 +25,20 @@ class TestResult:
     self.exit_diff = exit_diff
     self.diffs = diffs
 class Metadata:
-  def __init__(self, test_folder_path: str, tests_output_file_name: str, commit1: str, commit2: str):
+  def __init__(self, test_folder_path: str):
     self.test_folder_path = test_folder_path
-    self.tests_output_file_name = tests_output_file_name
-    self.commit1 = commit1
-    self.commit2 = commit2
 class InputData:
   def __init__(self, metadata: Metadata, results: List[TestResult]):
     self.metadata = metadata
     self.results = results
 
-# Parameters
+# Program arguments
+tests_output_file_name: str = 'optimization.out'
+commit1: str = '13a4c1dca0dd58d62acc741866fb945f3fe81592'
+commit2: str = '614c0134750071ffe08dc376e9cc8caf210974bf'
 input_data = InputData(
   Metadata(
     '/home/evaluation/evaluation/pub/bench/',
-    'optimization.out',
-    '13a4c1dca0dd58d62acc741866fb945f3fe81592',
-    '614c0134750071ffe08dc376e9cc8caf210974bf',
   ),
   [
     TestResult(
@@ -111,11 +108,10 @@ for test_result in input_data.results:
   nested[components[-1]] = test_result
 
 # Open file
-output_file_name = os.path.splitext(input_data.metadata.tests_output_file_name)[0]+'.md'
+output_file_name = os.path.splitext(tests_output_file_name)[0]+'.md'
 file = open(output_file_name, "w")
 
 # Write Front Matter
-commit = input_data.metadata.commit2
 file.write(f'''---
 title: "Optimization benchmarks"
 date: {datetime.datetime.now().astimezone().isoformat()}
@@ -123,7 +119,7 @@ weight: 1
 description: >
   Benchmarks of tests ran in optimization scheme.
 
-  Results are compared with [`{commit[0:7]}`](https://github.com/chocoteam/choco-solver/commit/{commit}).
+  Results are compared with [`{commit1[0:7]}`](https://github.com/chocoteam/choco-solver/commit/{commit1}).
 ---''')
 
 # Writes variation in a readable way
