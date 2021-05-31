@@ -1,4 +1,5 @@
 import datetime
+from typing import List
 
 # Classes
 class ExitValue:
@@ -10,6 +11,17 @@ class RawData:
     self.path = path
     self.stats = stats
     self.exit = exit
+class Diff:
+  def __init__(self, label: str, reference: float, value: float, diff: float, variation: float):
+    self.label = label
+    self.reference = reference
+    self.value = value
+    self.diff = diff
+    self.variation = variation
+class TestResult:
+  def __init__(self, exit: ExitValue, diffs: List[Diff]):
+    self.exit = exit
+    self.diffs = diffs
 
 # Variables
 commit = '13a4c1dca0dd58d62acc741866fb945f3fe81592'
@@ -39,12 +51,18 @@ inputData = [
 processedData = {
   "XCSP18": {
     "CrosswordDesign": {
-      "CrosswordDesign-03-4-rom_c18": {
-
-      },
-      "CrosswordDesign-06-4-rom_c18": {
-
-      },
+      "CrosswordDesign-03-4-rom_c18": TestResult(
+        ExitValue(0, "terminated"),
+        []
+      ),
+      "CrosswordDesign-04-4-rom_c18": TestResult(
+        ExitValue(1, "terminated"),
+        []
+      ),
+      "CrosswordDesign-07-4-rom_c18": TestResult(
+        ExitValue(-1, "failed"),
+        []
+      ),
     },
     "NurseRostering": {
       "NurseRostering-17_c18": {
@@ -89,8 +107,12 @@ description: >
 # Write headings
 def write_content(path_component: str, level: int, content):
   file.write(f'\n\n{"#" * level} {path_component}')
-  for key, value in content.items():
-    write_content(key, level + 1, value)
+  if isinstance(content, TestResult):
+    file.write(f'\n\n<!-- TODO: Write test results diff -->')
+    # TODO: Write test results diff (call function)
+  else:
+    for key, value in content.items():
+      write_content(key, level + 1, value)
 
 # Write data
 for key, value in processedData.items():
