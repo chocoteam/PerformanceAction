@@ -1,4 +1,5 @@
 import datetime
+import os
 from typing import List
 
 # Classes
@@ -24,9 +25,9 @@ class TestResult:
     self.exit_diff = exit_diff
     self.diffs = diffs
 class Metadata:
-  def __init__(self, test_folder_path: str, output_file_name: str, commit1: str, commit2: str):
+  def __init__(self, test_folder_path: str, tests_output_file_name: str, commit1: str, commit2: str):
     self.test_folder_path = test_folder_path
-    self.output_file_name = output_file_name
+    self.tests_output_file_name = tests_output_file_name
     self.commit1 = commit1
     self.commit2 = commit2
 class InputData:
@@ -110,8 +111,8 @@ for test_result in input_data.results:
   nested[components[-1]] = test_result
 
 # Open file
-# FIXME: Unhardcode value
-file = open("optimization.md", "w")
+output_file_name = os.path.splitext(input_data.metadata.tests_output_file_name)[0]+'.md'
+file = open(output_file_name, "w")
 
 # Write Front Matter
 commit = input_data.metadata.commit2
