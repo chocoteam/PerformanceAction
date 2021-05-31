@@ -25,7 +25,7 @@ class TestResult:
 
 # Variables
 commit = '13a4c1dca0dd58d62acc741866fb945f3fe81592'
-rawData = [
+raw_data = [
   RawData(
     "/home/evaluation/evaluation/pub/bench/XCSP18/CrosswordDesign/CrosswordDesign-03-4-rom_c18",
     [{"bound":9,"time":0},{"bound":12,"time":0}],
@@ -42,13 +42,13 @@ rawData = [
     ExitValue(-1, "failed"),
   ),
 ]
-inputData = [
+input_data = [
   
 ]
 
 # Process input data
 # TODO: Process data
-processedData = {
+processed_data = {
   "XCSP18": {
     "CrosswordDesign": {
       "CrosswordDesign-03-4-rom_c18": TestResult(
@@ -115,7 +115,7 @@ def write_content(path_component: str, level: int, content):
       write_content(key, level + 1, value)
 
 # Write data
-for key, value in processedData.items():
+for key, value in processed_data.items():
   write_content(key, 2, value)
 
 # Write trailing new line
