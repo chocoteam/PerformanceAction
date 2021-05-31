@@ -53,7 +53,7 @@ processed_data = {
     "CrosswordDesign": {
       "CrosswordDesign-03-4-rom_c18": TestResult(
         Diff("Exit value", 0, 0, 0, 0),
-        []
+        [Diff("bound", 12, 13, -1, -7.6923), Diff("time", 0, 0, 0, 0)]
       ),
       "CrosswordDesign-04-4-rom_c18": TestResult(
         Diff("Exit value", 1, 1, 0, 0),
@@ -104,18 +104,22 @@ description: >
   Results are compared with [`{commit[0:7]}`](https://github.com/chocoteam/choco-solver/commit/{commit}).
 ---''')
 
+# Writes variation in a readable way
+def write_variation(diff: Diff):
+  if diff.diff == 0:
+    file.write(f'[=]')
+  else:
+    sign = '+' if diff.diff > 0 else ''
+    file.write(f'(`{sign}{diff.diff}` / `{sign}{diff.variation}%`)')
+
 # Writes test results to the file
 def write_test_result(result: TestResult):
   diff = result.exit_diff
 
   # Write value
-  file.write(f'\n\n**{diff.label}:** {diff.value}')
+  file.write(f'\n\n**{diff.label}:** `{diff.value}` ')
   # Write variation
-  if diff.diff == 0:
-    file.write(f' [=]')
-  else:
-    sign = '-' if diff.diff < 0 else '+'
-    file.write(f' ({sign}{diff.diff} / {sign}{diff.variation}%)')
+  write_variation(diff)
 
   # Write diff table
   file.write(f'''\n\nEvolution of last results:
@@ -123,8 +127,10 @@ def write_test_result(result: TestResult):
 | Measure | Reference | Value | Variation |
 | ------- | --------- | ----- | --------- |''')
 
-  file.write(f'\n\n<!-- TODO: Write test results diff -->')
-  # TODO: Write test results diff
+  for diff in result.diffs:
+    file.write(f'\n| `{diff.label}` | `{diff.reference}` | `{diff.value}` | ')
+    write_variation(diff)
+    file.write(' |')
 
 # Writes headings to the file
 def write_content(path_component: str, level: int, content):
