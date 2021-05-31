@@ -19,81 +19,102 @@ class Diff:
     self.diff = diff
     self.variation = variation
 class TestResult:
-  def __init__(self, exit_diff: Diff, diffs: List[Diff]):
+  def __init__(self, file_path: str, exit_diff: Diff, diffs: List[Diff]):
+    self.file_path = file_path
     self.exit_diff = exit_diff
     self.diffs = diffs
+class Metadata:
+  def __init__(self, test_folder_path: str, output_file_name: str, commit1: str, commit2: str):
+    self.test_folder_path = test_folder_path
+    self.output_file_name = output_file_name
+    self.commit1 = commit1
+    self.commit2 = commit2
+class InputData:
+  def __init__(self, metadata: Metadata, results: List[TestResult]):
+    self.metadata = metadata
+    self.results = results
 
-# Variables
-commit = '13a4c1dca0dd58d62acc741866fb945f3fe81592'
-raw_data = [
-  RawData(
-    "/home/evaluation/evaluation/pub/bench/XCSP18/CrosswordDesign/CrosswordDesign-03-4-rom_c18",
-    [{"bound":9,"time":0},{"bound":12,"time":0}],
-    ExitValue(0, "terminated"),
+# Parameters
+input_data = InputData(
+  Metadata(
+    '/home/evaluation/evaluation/pub/bench/',
+    'optimization.out',
+    '13a4c1dca0dd58d62acc741866fb945f3fe81592',
+    '614c0134750071ffe08dc376e9cc8caf210974bf',
   ),
-  RawData(
-    "/home/evaluation/evaluation/pub/bench/XCSP18/CrosswordDesign/CrosswordDesign-04-4-rom_c18",
-    [{"bound":24,"time":0}],
-    ExitValue(1, "terminated"),
-  ),
-  RawData(
-    "/home/evaluation/evaluation/pub/bench/XCSP18/CrosswordDesign/CrosswordDesign-07-4-rom_c18",
-    [],
-    ExitValue(-1, "failed"),
-  ),
-]
-input_data = [
-  
-]
+  [
+    TestResult(
+      "/home/evaluation/evaluation/pub/bench/XCSP18/CrosswordDesign/CrosswordDesign-03-4-rom_c18",
+      Diff("Exit value", 0, 0, 0, 0),
+      [Diff("bound", 12, 13, -1, -7.6923), Diff("time", 0, 0, 0, 0)]
+    ),
+    TestResult(
+      "/home/evaluation/evaluation/pub/bench/XCSP18/CrosswordDesign/CrosswordDesign-04-4-rom_c18",
+      Diff("Exit value", 1, 1, 0, 0),
+      []
+    ),
+    TestResult(
+      "/home/evaluation/evaluation/pub/bench/XCSP18/CrosswordDesign/CrosswordDesign-07-4-rom_c18",
+      Diff("Exit value", -1, -1, 0, 0),
+      []
+    ),
+    TestResult(
+      "/home/evaluation/evaluation/pub/bench/XCSP18/NurseRostering/NurseRostering-17_c18",
+      Diff("Exit value", -1, -1, 0, 0),
+      []
+    ),
+    TestResult(
+      "/home/evaluation/evaluation/pub/bench/XCSP18/NurseRostering/NurseRostering-20_c18",
+      Diff("Exit value", -1, -1, 0, 0),
+      []
+    ),
+    TestResult(
+      "/home/evaluation/evaluation/pub/bench/XCSP18/Rlfap/Rlfap-opt/Rlfap-scen-03-opt_c18",
+      Diff("Exit value", -1, -1, 0, 0),
+      []
+    ),
+    TestResult(
+      "/home/evaluation/evaluation/pub/bench/XCSP18/Rlfap/Rlfap-opt/Rlfap-scen-06-opt_c18",
+      Diff("Exit value", -1, -1, 0, 0),
+      []
+    ),
+    TestResult(
+      "/home/evaluation/evaluation/pub/bench/XCSP3/Filters-ar_1_2.xml",
+      Diff("Exit value", -1, -1, 0, 0),
+      []
+    ),
+  ],
+)
 
 # Process input data
-# TODO: Process data
-processed_data = {
-  "XCSP18": {
-    "CrosswordDesign": {
-      "CrosswordDesign-03-4-rom_c18": TestResult(
-        Diff("Exit value", 0, 0, 0, 0),
-        [Diff("bound", 12, 13, -1, -7.6923), Diff("time", 0, 0, 0, 0)]
-      ),
-      "CrosswordDesign-04-4-rom_c18": TestResult(
-        Diff("Exit value", 1, 1, 0, 0),
-        []
-      ),
-      "CrosswordDesign-07-4-rom_c18": TestResult(
-        Diff("Exit value", -1, -1, 0, 0),
-        []
-      ),
-    },
-    "NurseRostering": {
-      "NurseRostering-17_c18": {
+processed_data = {}
+prefix = input_data.metadata.test_folder_path
+for test_result in input_data.results:
+  # Remove file path prefix
+  file_path: str = test_result.file_path.removeprefix(prefix)
 
-      },
-      "NurseRostering-20_c18": {
+  # Split file path in components
+  # Tests are run on Linux, so it's ok to split on `/`
+  components = file_path.split('/')
 
-      },
-    },
-    "Rlfap": {
-      "Rlfap-opt": {
-        "Rlfap-scen-03-opt_c18": {
+  # Create folder structure
+  nested = processed_data
+  for component in components[:-1]:
+    # Add component if it doesn't exist
+    if component not in nested:
+      nested[component] = {}
+    # Go one level deeper
+    nested = nested[component]
 
-        },
-        "Rlfap-scen-06-opt_c18": {
-
-        },
-      },
-    },
-  },
-  "XCSP3": {
-    "Filters-ar_1_2.xml": {
-
-    },
-  },
-}
+  # Store test result in last folder
+  nested[components[-1]] = test_result
 
 # Open file
+# FIXME: Unhardcode value
 file = open("optimization.md", "w")
 
 # Write Front Matter
+commit = input_data.metadata.commit2
 file.write(f'''---
 title: "Optimization benchmarks"
 date: {datetime.datetime.now().astimezone().isoformat()}
