@@ -148,7 +148,7 @@ def __write_variation(file: TextIOWrapper, diff: Diff):
         return f'<span style="color: {color}">{content}</span>'
 
     if diff.diff == 0:
-        file.write(span('#005C94', '[=]'))
+        file.write(span('#005C94', '='))
     else:
         sign = '+' if diff.diff > 0 else ''
         # FIXME: Unhardcode limit
