@@ -144,11 +144,24 @@ def __write_variation(file: TextIOWrapper, diff: Diff):
         diff (Diff): A diff object describing the variation
     """
 
+    def span(color: str, content: str):
+        return f'<span style="color: {color}">{content}</span>'
+
     if diff.diff == 0:
-        file.write(f'[=]')
+        file.write(span('#005C94', '[=]'))
     else:
         sign = '+' if diff.diff > 0 else ''
-        file.write(f'(`{sign}{diff.diff}` / `{sign}{diff.variation}%`)')
+        # FIXME: Unhardcode limit
+        if diff.variation < -1:
+            icon = '↘︎'
+            color = 'green'
+        elif diff.variation > 1:
+            icon = '↗︎'
+            color = 'red'
+        else:
+            icon = '≈'
+            color = '#005C94'
+        file.write(span(color, f'{icon} `{sign}{diff.diff}` (`{sign}{diff.variation}%`)'))
 
 def __write_test_result(file: TextIOWrapper, result: TestResult):
     """Writes test results to the file.
