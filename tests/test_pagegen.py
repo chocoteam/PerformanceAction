@@ -14,7 +14,7 @@ def test_with_data():
             TestResult(
                 "/home/evaluation/evaluation/pub/bench/XCSP18/CrosswordDesign/CrosswordDesign-03-4-rom_c18",
                 Diff("Exit value", 0, 0, 0, 0),
-                [Diff("bound", 12, 13, -1, -7.6923), Diff("time", 0, 0, 0, 0)]
+                [Diff("bound", 13, 12, -1, -7.6923), Diff("time", 0, 0, 0, 0)]
             ),
             TestResult(
                 "/home/evaluation/evaluation/pub/bench/XCSP18/CrosswordDesign/CrosswordDesign-04-4-rom_c18",
