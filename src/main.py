@@ -2,6 +2,7 @@ import argparse
 import os
 
 import filemanager
+import comparator
 
 def main():
     # Argument parsing
@@ -23,14 +24,8 @@ def main():
     # File parsing
     ref_file = filemanager.FileManager(filepath, hashref)
     comp_file = filemanager.FileManager(filepath, hashcomp)
-
-    ref_file.parse()
-    print(f'Content of {ref_file.filepath} {ref_file.filehash}:')
-    print(ref_file.content)
-
-    comp_file.parse()
-    print(f'Content of {comp_file.filepath} {comp_file.filehash}:')
-    print(comp_file.content)
+    comp = comparator.Comparator(ref_file, comp_file)
+    page_gen_input_data = comp.compare()
 
 if __name__ == "__main__":
     main()
