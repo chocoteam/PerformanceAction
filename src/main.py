@@ -15,9 +15,9 @@ def main():
     hashref = args.hashref
     hashcomp = args.hashcomp
 
-    print(f'Your filepath: ${filepath}')
-    print(f'Your reference commit hash: ${hashref}')
-    print(f'Your commit hash to compare: ${hashcomp}')
+    print(f'Your filepath: {filepath}')
+    print(f'Your reference commit hash: {hashref}')
+    print(f'Your commit hash to compare: {hashcomp}')
     print('-----------------------------------------------')
 
     # File parsing
@@ -25,11 +25,11 @@ def main():
     comp_file = filemanager.FileManager(filepath, hashcomp)
 
     ref_file.parse()
-    print(f'Content of ${ref_file.filepath} ${ref_file.filehash}:')
+    print(f'Content of {ref_file.filepath} {ref_file.filehash}:')
     print(ref_file.content)
 
     comp_file.parse()
-    print(f'Content of ${comp_file.filepath} ${comp_file.filehash}:')
+    print(f'Content of {comp_file.filepath} {comp_file.filehash}:')
     print(comp_file.content)
 
 if __name__ == "__main__":

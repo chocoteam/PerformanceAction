@@ -11,7 +11,7 @@ def get_filecontent(filepath: str, filehash: str):
         # Clean output
         repopath = repopath.lstrip("b'").rstrip("n'").rstrip('\\')
     except subprocess.CalledProcessError as e:
-        print(f'Could not determine the Git repo path. Error: ${e.returncode}')
+        print(f'Could not determine the Git repo path. Error: {e.returncode}')
 
     relpath = os.path.relpath(filepath, repopath)
     # Get rid of `\` on Windows
@@ -19,10 +19,10 @@ def get_filecontent(filepath: str, filehash: str):
 
     # Get file content from relpath and filehash
     try:
-        filecontent = str(subprocess.check_output('git show ${filehash}:${relpath}')).lstrip("b'").rstrip("'")
+        filecontent = str(subprocess.check_output(f'git show {filehash}:{relpath}'))
         # Clean output
-        filecontent = filecontent.replace('\\n', '')
+        filecontent = filecontent.lstrip("b'").rstrip("'").replace('\\n', '')
     except subprocess.CalledProcessError as e:
-        print(f'Could not read ${filepath} from ${filehash}. Error: ${e.returncode}')
+        print(f'Could not read {filepath} from {filehash}. Error: {e.returncode}')
 
     return filecontent
