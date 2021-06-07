@@ -5,4 +5,4 @@
 ### Run tests
 
 1. Install [`pytest`](https://docs.pytest.org/en/6.2.x/getting-started.html#install-pytest)
-2. Run `make test`
+2. Run `pytest` in project folder
