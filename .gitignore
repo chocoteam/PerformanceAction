@@ -6,5 +6,5 @@ __pycache__/
 .DS_Store
 
 ### Custom ###
-tests/.out/*
-!tests/.out/.gitkeep
+.out/*
+!.out/.gitkeep

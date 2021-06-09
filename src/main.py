@@ -4,6 +4,7 @@ import os
 import filemanager
 import comparator
 import models
+import pagegen
 
 def main():
     # Argument parsing
@@ -34,6 +35,7 @@ def main():
 
     # Result page generation
     page_gen_input_data = models.PageGenInputData(models.Metadata(ref_content["metadata"]["testFolderPath"]), comp_results)
+    pagegen.generate_page(os.path.basename(filepath), hashref, hashcomp, ".out", page_gen_input_data)
 
 if __name__ == "__main__":
     main()

@@ -18,6 +18,10 @@ def generate_page(tests_output_file_name: str, commit1: str, commit2: str, outpu
     # Process data for later usage
     processed_data = __process_input_data(input_data)
 
+    # Create output folder tree (recursive)
+    if not os.path.isdir(output_file_folder):
+        os.makedirs(output_file_folder)
+
     # Create new file
     file = __open_page_file(tests_output_file_name, output_file_folder)
 
