@@ -2,7 +2,7 @@ import datetime
 import os
 from io import TextIOWrapper
 
-import models
+from models import PageGenInputData, TestResult, Diff
 
 def generate_page(tests_output_file_name: str, commit1: str, commit2: str, output_file_folder: str, input_data: PageGenInputData):
     """Generates a [Hugo](https://gohugo.io/) page displaying variation between test results.
