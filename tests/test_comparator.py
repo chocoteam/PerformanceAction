@@ -28,8 +28,8 @@ def test_1():
     assert exit_diff.label == 'Exit value'
     assert exit_diff.reference == 4
     assert exit_diff.value == 2
-    assert exit_diff.diff == 2
-    assert exit_diff.variation == 100
+    assert exit_diff.diff == -2
+    assert exit_diff.variation == -50
     diffs = res.diffs
     assert isinstance(diffs, List)
     assert len(diffs) == 2
@@ -43,5 +43,5 @@ def test_1():
     assert diff_time.label == 'time'
     assert diff_time.reference == 2
     assert diff_time.value == 1
-    assert diff_time.diff == 1
-    assert diff_time.variation == 100
+    assert diff_time.diff == -1
+    assert diff_time.variation == -50

@@ -39,7 +39,7 @@ class Comparator():
 
     @staticmethod
     def make_diff(label: str, reference: float, value: float):
-        diff = reference - value
+        diff = value - reference
         variation = Comparator.compute_variation(reference, value, diff)
         return models.Diff(label, reference, value, diff, variation)
 
@@ -51,6 +51,6 @@ class Comparator():
             else:
                 return 100
         else:
-            variation = (diff / value) * 100
+            variation = (diff / reference) * 100
 
         return variation
