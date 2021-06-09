@@ -90,7 +90,7 @@ def __open_page_file(tests_output_file_name: str, output_file_folder: str):
 
     output_file_name = os.path.splitext(tests_output_file_name)[0]+'.md'
     output_file_path = os.path.join(output_file_folder, output_file_name)
-    return open(output_file_path, "w")
+    return open(output_file_path, "w", encoding="utf-8")
 
 def __write_front_matter(file: TextIOWrapper, reference_commit: str):
     """Writes [Hugo Front Matter](heading) in a file.
