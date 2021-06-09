@@ -6,10 +6,8 @@ from comparator import Comparator
 from models import TestResult, Diff
 
 def test_1():
-    ref_file_path = './tests/data/input/optimization1.out.json'
-    comp_file_path = './tests/data/input/optimization2.out.json'
-    ref_file = open(ref_file_path, 'r')
-    comp_file = open(comp_file_path, 'r')
+    ref_file = open('./tests/data/input/optimization1.out.json', 'r')
+    comp_file = open('./tests/data/input/optimization2.out.json', 'r')
     ref_content = json.loads(ref_file.read())
     comp_content = json.loads(comp_file.read())
     ref_file.close()
@@ -36,13 +34,13 @@ def test_1():
     assert isinstance(diffs, List)
     assert len(diffs) == 2
     diff_bound = diffs[0]
-    assert diff_bound.label == "bound"
+    assert diff_bound.label == 'bound'
     assert diff_bound.reference == 12
     assert diff_bound.value == 12
     assert diff_bound.diff == 0
     assert diff_bound.variation == 0
     diff_time = diffs[1]
-    assert diff_time.label == "time"
+    assert diff_time.label == 'time'
     assert diff_time.reference == 2
     assert diff_time.value == 1
     assert diff_time.diff == 1
