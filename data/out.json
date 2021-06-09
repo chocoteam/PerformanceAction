@@ -1,26 +1,31 @@
-[
-    {
-        "name": "filepath",
-        "stats": [
-            {"bound": 9, "time": 0},
-            {"bound": 12, "time": 2}
-        ],
-        "exit": {"time": 3, "status": "terminated"}
+{
+    "metadata": {
+        "testFolderPath": "/home/evaluation/evaluation/pub/bench/"
     },
-    {
-        "name": "filepath2",
-        "stats": [
-            {"bound": 9, "time": 0},
-            {"bound": 12, "time": 2}
-        ],
-        "exit": {"time": 3, "status": "terminated"}
-    },
-    {
-        "name": "filepath3",
-        "stats": [
-            {"bound": 9, "time": 0},
-            {"bound": 12, "time": 2}
-        ],
-        "exit": {"time": 3, "status": "terminated"}
-    }
-]
+    "results": [
+        {
+            "name": "/home/evaluation/evaluation/pub/bench/lorem/ipsum/1",
+            "stats": [
+                {"bound": 9, "time": 0},
+                {"bound": 12, "time": 2}
+            ],
+            "exit": {"time": 3, "status": "terminated"}
+        },
+        {
+            "name": "/home/evaluation/evaluation/pub/bench/lorem/ipsum/2",
+            "stats": [
+                {"bound": 9, "time": 0},
+                {"bound": 12, "time": 2}
+            ],
+            "exit": {"time": 3, "status": "terminated"}
+        },
+        {
+            "name": "/home/evaluation/evaluation/pub/bench/lorem/ipsum/3",
+            "stats": [
+                {"bound": 9, "time": 0},
+                {"bound": 12, "time": 2}
+            ],
+            "exit": {"time": 3, "status": "terminated"}
+        }
+    ]
+}
