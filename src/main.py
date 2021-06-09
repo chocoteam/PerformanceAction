@@ -3,6 +3,7 @@ import os
 
 import filemanager
 import comparator
+import models
 
 def main():
     # Argument parsing
@@ -24,8 +25,15 @@ def main():
     # File parsing
     ref_file = filemanager.FileManager(filepath, hashref)
     comp_file = filemanager.FileManager(filepath, hashcomp)
-    comp = comparator.Comparator(ref_file, comp_file)
-    page_gen_input_data = comp.compare()
+    ref_content = ref_file.parse()
+    comp_content = comp_file.parse()
+
+    # Comparison
+    comp = comparator.Comparator(ref_content, comp_content)
+    comp_results = comp.compare()
+
+    # Result page generation
+    page_gen_input_data = models.PageGenInputData(models.Metadata(ref_content["metadata"]["testFolderPath"]), comp_results)
 
 if __name__ == "__main__":
     main()

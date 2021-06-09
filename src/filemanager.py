@@ -5,9 +5,7 @@ class FileManager():
     def __init__(self, filepath: str, filehash: str):
         self.filepath = filepath
         self.filehash = filehash
-        self.content = ''
-    
+
     def parse(self):
-        if self.content == '':
-            rawcontent = git.get_filecontent(self.filepath, self.filehash)
-            self.content = json.loads(rawcontent)
+        rawcontent = git.get_filecontent(self.filepath, self.filehash)
+        return json.loads(rawcontent)
