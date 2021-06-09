@@ -1,5 +1,6 @@
 import pytest
-from src.pagegen import generate_page, PageGenInputData, Metadata, TestResult, Diff
+from models import PageGenInputData, Metadata, TestResult, Diff
+from pagegen import generate_page
 
 def test_with_data():
     tests_output_file_name: str = 'test_with_data.out'

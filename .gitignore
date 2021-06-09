@@ -2,5 +2,9 @@
 __pycache__/
 .pytest_cache/
 
+### macOS ###
+.DS_Store
+
 ### Custom ###
-tests/.out/
+.out/*
+!.out/.gitkeep

@@ -1,38 +1,8 @@
 import datetime
 import os
 from io import TextIOWrapper
-from typing import List
 
-# Classes
-class ExitValue:
-    def __init__(self, time: int, status: str):
-        self.time = time
-        self.status = status
-class RawData:
-    def __init__(self, path: str, stats, exit: ExitValue):
-        self.path = path
-        self.stats = stats
-        self.exit = exit
-class Diff:
-    def __init__(self, label: str, reference: float, value: float, diff: float, variation: float):
-        self.label = label
-        self.reference = reference
-        self.value = value
-        self.diff = diff
-        self.variation = variation
-class TestResult:
-    __test__ = False
-    def __init__(self, file_path: str, exit_diff: Diff, diffs: List[Diff]):
-        self.file_path = file_path
-        self.exit_diff = exit_diff
-        self.diffs = diffs
-class Metadata:
-    def __init__(self, test_folder_path: str):
-        self.test_folder_path = test_folder_path
-class PageGenInputData:
-    def __init__(self, metadata: Metadata, results: List[TestResult]):
-        self.metadata = metadata
-        self.results = results
+from models import PageGenInputData, TestResult, Diff
 
 def generate_page(tests_output_file_name: str, commit1: str, commit2: str, output_file_folder: str, input_data: PageGenInputData):
     """Generates a [Hugo](https://gohugo.io/) page displaying variation between test results.
@@ -47,6 +17,10 @@ def generate_page(tests_output_file_name: str, commit1: str, commit2: str, outpu
 
     # Process data for later usage
     processed_data = __process_input_data(input_data)
+
+    # Create output folder tree (recursive)
+    if not os.path.isdir(output_file_folder):
+        os.makedirs(output_file_folder)
 
     # Create new file
     file = __open_page_file(tests_output_file_name, output_file_folder)
@@ -116,7 +90,7 @@ def __open_page_file(tests_output_file_name: str, output_file_folder: str):
 
     output_file_name = os.path.splitext(tests_output_file_name)[0]+'.md'
     output_file_path = os.path.join(output_file_folder, output_file_name)
-    return open(output_file_path, "w")
+    return open(output_file_path, "w", encoding="utf-8")
 
 def __write_front_matter(file: TextIOWrapper, reference_commit: str):
     """Writes [Hugo Front Matter](heading) in a file.

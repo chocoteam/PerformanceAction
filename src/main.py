@@ -1,36 +1,46 @@
 import argparse
 import os
+import json
 
-import filemanager
+import comparator
+import models
+import pagegen
 
 def main():
     # Argument parsing
     parser = argparse.ArgumentParser()
-    parser.add_argument('filepath', help='Path of JSON output file to parse')
-    parser.add_argument('hashref', help='Hash value of commit to compare against (reference commit)')
-    parser.add_argument('hashcomp', help='Hash value of commit to compare')
+    parser.add_argument('ref_file_path', help='Path to JSON file to compare against (reference file)')
+    parser.add_argument('comp_file_path', help='Path to JSON file to compare')
+    parser.add_argument('output_path', help='Path of folder to output the generated page')
     args = parser.parse_args()
 
-    filepath = os.path.abspath(args.filepath)
-    hashref = args.hashref
-    hashcomp = args.hashcomp
+    ref_file_path = os.path.abspath(args.ref_file_path)
+    comp_file_path = os.path.abspath(args.comp_file_path)
+    output_path = os.path.abspath(args.output_path)
 
-    print(f'Your filepath: {filepath}')
-    print(f'Your reference commit hash: {hashref}')
-    print(f'Your commit hash to compare: {hashcomp}')
+    print(f'Your reference file: {ref_file_path}')
+    print(f'Your file to compare: {comp_file_path}')
     print('-----------------------------------------------')
 
     # File parsing
-    ref_file = filemanager.FileManager(filepath, hashref)
-    comp_file = filemanager.FileManager(filepath, hashcomp)
+    ref_file = open(ref_file_path, 'r')
+    comp_file = open(comp_file_path, 'r')
+    ref_content = json.loads(ref_file.read())
+    comp_content = json.loads(comp_file.read())
+    ref_file.close()
+    comp_file.close()
 
-    ref_file.parse()
-    print(f'Content of {ref_file.filepath} {ref_file.filehash}:')
-    print(ref_file.content)
+    # Rest of the program
+    shared_main(ref_file_path, 'hashref', 'hashcomp', ref_content, comp_content, output_path)
 
-    comp_file.parse()
-    print(f'Content of {comp_file.filepath} {comp_file.filehash}:')
-    print(comp_file.content)
+def shared_main(input_file_path, hashref, hashcomp, ref_content, comp_content, output_path):
+    # Comparison
+    comp = comparator.Comparator(ref_content, comp_content)
+    comp_results = comp.compare()
+
+    # Result page generation
+    page_gen_input_data = models.PageGenInputData(models.Metadata(ref_content["metadata"]["testFolderPath"]), comp_results)
+    pagegen.generate_page(os.path.basename(input_file_path), hashref, hashcomp, output_path, page_gen_input_data)
 
 if __name__ == "__main__":
     main()

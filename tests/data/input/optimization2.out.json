@@ -1,0 +1,31 @@
+{
+    "metadata": {
+        "testFolderPath": "/home/evaluation/evaluation/pub/bench/"
+    },
+    "results": [
+        {
+            "name": "/home/evaluation/evaluation/pub/bench/lorem/ipsum/1",
+            "stats": [
+                {"bound": 9, "time": 0},
+                {"bound": 12, "time": 1}
+            ],
+            "exit": {"time": 2, "status": "terminated"}
+        },
+        {
+            "name": "/home/evaluation/evaluation/pub/bench/lorem/ipsum/3",
+            "stats": [
+                {"bound": 10, "time": 0},
+                {"bound": 13, "time": 2}
+            ],
+            "exit": {"time": -1, "status": "failed"}
+        },
+        {
+            "name": "/home/evaluation/evaluation/pub/bench/lorem/ipsum/2",
+            "stats": [
+                {"bound": 8, "time": 0},
+                {"bound": 11, "time": 2}
+            ],
+            "exit": {"time": 4, "status": "terminated"}
+        }
+    ]
+}
