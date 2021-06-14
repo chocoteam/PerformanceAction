@@ -57,7 +57,7 @@ def __process_input_data(input_data: PageGenInputData):
     # Populate the dictionary
     for test_result in input_data.results:
         # Remove file path prefix
-        file_path: str = test_result.file_path.removeprefix(prefix)
+        file_path: str = os.path.relpath(test_result.file_path, prefix)
 
         # Split file path in components
         # Note: Tests are run on Linux, so it's ok to split on `/`
@@ -112,13 +112,15 @@ description: >
   Results of [`{commit2[0:7]}`]({os.path.join(metadata.repository_url, 'commit', commit2)}) are compared with [`{commit1[0:7]}`]({os.path.join(metadata.repository_url, 'commit', commit1)}).
 ---''')
 
-def __write_variation(file: TextIOWrapper, diff: Diff, metadata: Metadata):
-    """Writes variation in a readable way.
+def __pretty_variation(diff: Diff, metadata: Metadata):
+    """Outputs variation in a readable way (a colored `<span>` with a symbol).
 
     Args:
-        file (TextIOWrapper): A file
         diff (Diff): A diff object describing the variation
         metadata (Metadata): Test suite metadata used to generate the page
+
+    Returns:
+        str: Some Markdown text
     """
 
     # Helper function
@@ -131,10 +133,10 @@ def __write_variation(file: TextIOWrapper, diff: Diff, metadata: Metadata):
 
     if diff.value == -1:
         # If result is now `-1`, show a red cross
-        file.write(span(negative_color, f'⨯ (was `{diff.reference}`)'))
+        return span(negative_color, f'⨯ (was `{diff.reference}`)')
     elif diff.diff == 0:
         # If result is equal to last result, show a green equal sign
-        file.write(span(neutral_color, '='))
+        return span(neutral_color, '=')
     else:
         similar_percent_limit = abs(metadata.similar_percent_limit)
         sign = '+' if diff.diff > 0 else ''
@@ -147,7 +149,7 @@ def __write_variation(file: TextIOWrapper, diff: Diff, metadata: Metadata):
         else:
             icon = '≈'
             color = neutral_color
-        file.write(span(color, f'{icon} `{sign}{diff.diff}` (`{sign}{round(diff.variation, 2)}%`)'))
+        return span(color, f'{icon} `{sign}{diff.diff}` (`{sign}{round(diff.variation, 2)}%`)')
 
 def __write_test_result(file: TextIOWrapper, result: TestResult, metadata: Metadata):
     """Writes test results to the file.
@@ -160,10 +162,8 @@ def __write_test_result(file: TextIOWrapper, result: TestResult, metadata: Metad
 
     diff = result.exit_diff
 
-    # Write value
-    file.write(f'\n\n**{diff.label}:** `{diff.value}` ')
-    # Write variation
-    __write_variation(file, diff, metadata)
+    # Write diff
+    file.write(f'\n\n**{diff.label}:** `{diff.value}` {__pretty_variation(diff, metadata)}')
 
     # Do not write results evolution table if there was no result
     if not result.diffs:
@@ -177,9 +177,7 @@ def __write_test_result(file: TextIOWrapper, result: TestResult, metadata: Metad
 | ------- | --------- | ----- | --------- |''')
 
     for diff in result.diffs:
-        file.write(f'\n| `{diff.label}` | `{diff.reference}` | `{diff.value}` | ')
-        __write_variation(file, diff, metadata)
-        file.write(' |')
+        file.write(f'\n| `{diff.label}` | `{diff.reference}` | `{diff.value}` | {__pretty_variation(diff, metadata)} |')
 
 def __write_content(file: TextIOWrapper, heading: str, level: int, content: dict, metadata: Metadata):
     """Writes headings to the file.
