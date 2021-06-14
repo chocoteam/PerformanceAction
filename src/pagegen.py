@@ -143,7 +143,7 @@ def __write_variation(file: TextIOWrapper, diff: Diff):
         else:
             icon = '≈'
             color = neutral_color
-        file.write(span(color, f'{icon} `{sign}{diff.diff}` (`{sign}{diff.variation}%`)'))
+        file.write(span(color, f'{icon} `{sign}{diff.diff}` (`{sign}{round(diff.variation, 2)}%`)'))
 
 def __write_test_result(file: TextIOWrapper, result: TestResult):
     """Writes test results to the file.
@@ -159,6 +159,11 @@ def __write_test_result(file: TextIOWrapper, result: TestResult):
     file.write(f'\n\n**{diff.label}:** `{diff.value}` ')
     # Write variation
     __write_variation(file, diff)
+
+    # Do not write results evolution table if there was no result
+    if not result.diffs:
+        file.write('\n\n*The test generated no result.*')
+        return
 
     # Write diff table
     file.write(f'''\n\nEvolution of last results:
