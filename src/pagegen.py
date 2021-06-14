@@ -111,12 +111,14 @@ description: >
   Results of [`{commit2[0:7]}`](https://github.com/chocoteam/choco-solver/commit/{commit2}) are compared with [`{commit1[0:7]}`](https://github.com/chocoteam/choco-solver/commit/{commit1}).
 ---''')
 
-def __write_variation(file: TextIOWrapper, diff: Diff):
-    """Writes variation in a readable way.
+def __pretty_variation(diff: Diff):
+    """Outputs variation in a readable way (a colored `<span>` with a symbol).
 
     Args:
-        file (TextIOWrapper): A file
         diff (Diff): A diff object describing the variation
+
+    Returns:
+        str: Some Markdown text
     """
 
     def span(color: str, content: str):
@@ -128,10 +130,10 @@ def __write_variation(file: TextIOWrapper, diff: Diff):
 
     if diff.value == -1:
         # If result is now `-1`, show a red cross
-        file.write(span(negative_color, f'⨯ (was `{diff.reference}`)'))
+        return span(negative_color, f'⨯ (was `{diff.reference}`)')
     elif diff.diff == 0:
         # If result is equal to last result, show a green equal sign
-        file.write(span(neutral_color, '='))
+        return span(neutral_color, '=')
     else:
         sign = '+' if diff.diff > 0 else ''
         # FIXME: Unhardcode limit
@@ -144,7 +146,7 @@ def __write_variation(file: TextIOWrapper, diff: Diff):
         else:
             icon = '≈'
             color = neutral_color
-        file.write(span(color, f'{icon} `{sign}{diff.diff}` (`{sign}{round(diff.variation, 2)}%`)'))
+        return span(color, f'{icon} `{sign}{diff.diff}` (`{sign}{round(diff.variation, 2)}%`)')
 
 def __write_test_result(file: TextIOWrapper, result: TestResult):
     """Writes test results to the file.
@@ -156,10 +158,8 @@ def __write_test_result(file: TextIOWrapper, result: TestResult):
 
     diff = result.exit_diff
 
-    # Write value
-    file.write(f'\n\n**{diff.label}:** `{diff.value}` ')
-    # Write variation
-    __write_variation(file, diff)
+    # Write diff
+    file.write(f'\n\n**{diff.label}:** `{diff.value}` {__pretty_variation(diff)}')
 
     # Do not write results evolution table if there was no result
     if not result.diffs:
@@ -173,9 +173,7 @@ def __write_test_result(file: TextIOWrapper, result: TestResult):
 | ------- | --------- | ----- | --------- |''')
 
     for diff in result.diffs:
-        file.write(f'\n| `{diff.label}` | `{diff.reference}` | `{diff.value}` | ')
-        __write_variation(file, diff)
-        file.write(' |')
+        file.write(f'\n| `{diff.label}` | `{diff.reference}` | `{diff.value}` | {__pretty_variation(diff)} |')
 
 def __write_content(file: TextIOWrapper, heading: str, level: int, content: dict):
     """Writes headings to the file.
