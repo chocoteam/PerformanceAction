@@ -154,6 +154,7 @@ def __write_test_result(file: TextIOWrapper, result: TestResult):
 
     # Do not write results evolution table if there was no result
     if not result.diffs:
+        file.write('\n\n*The test generated no result.*')
         return
 
     # Write diff table

@@ -80,3 +80,4 @@ def test_table_hidden_if_no_result():
     f = open('./tests/.out/test_table_hidden_if_no_result.md', 'r')
     file_content = f.read()
     assert '| Measure' not in file_content
+    assert '*The test generated no result.*' in file_content
