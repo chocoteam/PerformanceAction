@@ -2,7 +2,7 @@ import datetime
 import os
 from io import TextIOWrapper
 
-from models import PageGenInputData, Metadata, TestResult, Diff
+from models import PageGenInputData, PageGenSettings, TestResult, Diff
 
 def generate_page(tests_output_file_name: str, commit1: str, commit2: str, output_file_folder: str, input_data: PageGenInputData):
     """Generates a [Hugo](https://gohugo.io/) page displaying variation between test results.
@@ -26,11 +26,11 @@ def generate_page(tests_output_file_name: str, commit1: str, commit2: str, outpu
     file = __open_page_file(tests_output_file_name, output_file_folder)
 
     # Write Hugo Front Matter
-    __write_front_matter(file, commit1, commit2, input_data.metadata)
+    __write_front_matter(file, commit1, commit2, input_data.settings)
 
     # Create file content
     for key, value in processed_data.items():
-        __write_content(file, key, 2, value, input_data.metadata)
+        __write_content(file, key, 2, value, input_data.settings)
 
     # Write trailing new line
     file.write('\n')
@@ -52,7 +52,7 @@ def __process_input_data(input_data: PageGenInputData):
     processed_data = {}
 
     # Get file path prefix to remove when generating the dictionary structure
-    prefix = input_data.metadata.test_folder_path
+    prefix = input_data.settings.test_output_metadata.test_folder_path
 
     # Populate the dictionary
     for test_result in input_data.results:
@@ -92,32 +92,32 @@ def __open_page_file(tests_output_file_name: str, output_file_folder: str):
     output_file_path = os.path.join(output_file_folder, output_file_name)
     return open(output_file_path, "w", encoding="utf-8")
 
-def __write_front_matter(file: TextIOWrapper, commit1: str, commit2: str, metadata: Metadata):
+def __write_front_matter(file: TextIOWrapper, commit1: str, commit2: str, settings: PageGenSettings):
     """Writes [Hugo Front Matter](heading) in a file.
 
     Args:
         file (TextIOWrapper): A file
         commit1 (str): Hash value of reference commit for test results variation
         commit2 (str): Hash value of compared commit (actual one)
-        metadata (Metadata): Test suite metadata used to generate the page
+        settings (PageGenSettings): Metadata used to generate the page
     """
 
     file.write(f'''---
-title: "{metadata.page_title}"
+title: "{settings.test_output_metadata.page_title}"
 date: {datetime.datetime.now().astimezone().isoformat()}
 weight: 1
 description: >
-  {metadata.page_description}
+  {settings.test_output_metadata.page_description}
 
-  Results of [`{commit2[0:7]}`]({os.path.join(metadata.repository_url, 'commit', commit2)}) are compared with [`{commit1[0:7]}`]({os.path.join(metadata.repository_url, 'commit', commit1)}).
+  Results of [`{commit2[0:7]}`]({os.path.join(settings.repository_url, 'commit', commit2)}) are compared with [`{commit1[0:7]}`]({os.path.join(settings.repository_url, 'commit', commit1)}).
 ---''')
 
-def __pretty_variation(diff: Diff, metadata: Metadata):
+def __pretty_variation(diff: Diff, settings: PageGenSettings):
     """Outputs variation in a readable way (a colored `<span>` with a symbol).
 
     Args:
         diff (Diff): A diff object describing the variation
-        metadata (Metadata): Test suite metadata used to generate the page
+        settings (PageGenSettings): Metadata used to generate the page
 
     Returns:
         str: Some Markdown text
@@ -138,7 +138,7 @@ def __pretty_variation(diff: Diff, metadata: Metadata):
         # If result is equal to last result, show a green equal sign
         return span(neutral_color, '=')
     else:
-        similar_percent_limit = abs(metadata.similar_percent_limit)
+        similar_percent_limit = abs(settings.similar_percent_limit)
         sign = '+' if diff.diff > 0 else ''
         if diff.variation < -similar_percent_limit:
             icon = '↘︎'
@@ -151,19 +151,19 @@ def __pretty_variation(diff: Diff, metadata: Metadata):
             color = neutral_color
         return span(color, f'{icon} `{sign}{diff.diff}` (`{sign}{round(diff.variation, 2)}%`)')
 
-def __write_test_result(file: TextIOWrapper, result: TestResult, metadata: Metadata):
+def __write_test_result(file: TextIOWrapper, result: TestResult, settings: PageGenSettings):
     """Writes test results to the file.
 
     Args:
         file (TextIOWrapper): A file
         result (TestResult): The tests results to write
-        metadata (Metadata): Test suite metadata used to generate the page
+        settings (PageGenSettings): Metadata used to generate the page
     """
 
     diff = result.exit_diff
 
     # Write diff
-    file.write(f'\n\n**{diff.label}:** `{diff.value}` {__pretty_variation(diff, metadata)}')
+    file.write(f'\n\n**{diff.label}:** `{diff.value}` {__pretty_variation(diff, settings)}')
 
     # Do not write results evolution table if there was no result
     if not result.diffs:
@@ -177,9 +177,9 @@ def __write_test_result(file: TextIOWrapper, result: TestResult, metadata: Metad
 | ------- | --------- | ----- | --------- |''')
 
     for diff in result.diffs:
-        file.write(f'\n| `{diff.label}` | `{diff.reference}` | `{diff.value}` | {__pretty_variation(diff, metadata)} |')
+        file.write(f'\n| `{diff.label}` | `{diff.reference}` | `{diff.value}` | {__pretty_variation(diff, settings)} |')
 
-def __write_content(file: TextIOWrapper, heading: str, level: int, content: dict, metadata: Metadata):
+def __write_content(file: TextIOWrapper, heading: str, level: int, content: dict, settings: PageGenSettings):
     """Writes headings to the file.
 
     Args:
@@ -187,12 +187,12 @@ def __write_content(file: TextIOWrapper, heading: str, level: int, content: dict
         heading (str): The heading of this content section
         level (int): The heading level of this content section
         content (dict): A nested dictionary containing path components as keys and TestResult as values
-        metadata (Metadata): Test suite metadata used to generate the page
+        settings (PageGenSettings): Metadata used to generate the page
     """
 
     file.write(f'\n\n{"#" * level} {heading}')
     if isinstance(content, TestResult):
-        __write_test_result(file, content, metadata)
+        __write_test_result(file, content, settings)
     else:
         for key, value in content.items():
-            __write_content(file, key, level + 1, value, metadata)
+            __write_content(file, key, level + 1, value, settings)

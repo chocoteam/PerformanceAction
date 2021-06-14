@@ -3,7 +3,7 @@ import os
 import json
 
 import comparator
-from models import PageGenInputData, Metadata
+from models import PageGenInputData, TestOutputMetadata, PageGenSettings
 import pagegen
 
 def main():
@@ -16,9 +16,9 @@ def main():
     parser.add_argument('similar_percent_limit', help='Maximum percentage signifying similarity. It must be positive, as it will be checked for both lower and higher values. If not set, it will default to `1%`', type=float, default=1)
     args = parser.parse_args()
 
-    inner_main(args.ref_file_path, args.comp_file_path, args.output_path, args.repository_url)
+    inner_main(args.ref_file_path, args.comp_file_path, args.output_path, args.repository_url, args.similar_percent_limit)
 
-def inner_main(ref_file_path: str, comp_file_path: str, output_path: str, repository_url: str):
+def inner_main(ref_file_path: str, comp_file_path: str, output_path: str, repository_url: str, similar_percent_limit: float=1):
     ref_file_path = os.path.abspath(ref_file_path)
     comp_file_path = os.path.abspath(comp_file_path)
     output_path = os.path.abspath(output_path)
@@ -36,21 +36,25 @@ def inner_main(ref_file_path: str, comp_file_path: str, output_path: str, reposi
     comp_file.close()
 
     # Rest of the program
-    shared_main(comp_file_path, 'hashref', 'hashcomp', ref_content, comp_content, output_path, repository_url)
+    shared_main(comp_file_path, 'hashref', 'hashcomp', ref_content, comp_content, output_path, repository_url, similar_percent_limit)
 
-def shared_main(input_file_path: str, hashref: str, hashcomp: str, ref_content, comp_content, output_path: str, repository_url: str):
+def shared_main(input_file_path: str, hashref: str, hashcomp: str, ref_content, comp_content, output_path: str, repository_url: str, similar_percent_limit: float=1):
     # Comparison
     comp = comparator.Comparator(ref_content, comp_content)
     comp_results = comp.compare()
 
     # Result page generation
-    metadata = Metadata(
+    metadata = TestOutputMetadata(
         test_folder_path=comp_content["metadata"]["testFolderPath"],
         page_title=comp_content["metadata"]["pageTitle"],
         page_description=comp_content["metadata"]["pageDescription"],
-        repository_url=repository_url,
     )
-    page_gen_input_data = PageGenInputData(metadata, comp_results)
+    settings = PageGenSettings(
+        test_output_metadata=metadata,
+        repository_url=repository_url,
+        similar_percent_limit=similar_percent_limit,
+    )
+    page_gen_input_data = PageGenInputData(settings, comp_results)
     pagegen.generate_page(os.path.basename(input_file_path), hashref, hashcomp, output_path, page_gen_input_data)
 
 if __name__ == "__main__":

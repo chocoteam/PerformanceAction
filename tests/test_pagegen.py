@@ -1,5 +1,5 @@
 import pytest
-from models import PageGenInputData, Metadata, TestResult, Diff
+from models import PageGenInputData, TestOutputMetadata, PageGenSettings, TestResult, Diff
 from pagegen import generate_page
 
 def test_with_data():
@@ -8,10 +8,12 @@ def test_with_data():
     commit2: str = '614c0134750071ffe08dc376e9cc8caf210974bf'
     output_file_folder: str = './tests/.out/'
     input_data = PageGenInputData(
-        Metadata(
-            test_folder_path='/home/evaluation/evaluation/pub/bench/',
-            page_title='Title',
-            page_description='Description',
+        PageGenSettings(
+            TestOutputMetadata(
+                test_folder_path='/home/evaluation/evaluation/pub/bench/',
+                page_title='Title',
+                page_description='Description',
+            ),
             repository_url='https://github.com/chocoteam/choco-solver',
         ),
         [
@@ -66,10 +68,12 @@ def test_failure_color():
     commit2: str = '614c0134750071ffe08dc376e9cc8caf210974bf'
     output_file_folder: str = './tests/.out/'
     input_data = PageGenInputData(
-        Metadata(
-            test_folder_path='/home/evaluation/evaluation/pub/bench/',
-            page_title='Title',
-            page_description='Description',
+        PageGenSettings(
+            TestOutputMetadata(
+                test_folder_path='/home/evaluation/evaluation/pub/bench/',
+                page_title='Title',
+                page_description='Description',
+            ),
             repository_url='https://github.com/chocoteam/choco-solver',
         ),
         [
@@ -105,10 +109,12 @@ def test_rounded_percentages():
     commit2: str = '614c0134750071ffe08dc376e9cc8caf210974bf'
     output_file_folder: str = './tests/.out/'
     input_data = PageGenInputData(
-        Metadata(
-            test_folder_path='/home/evaluation/evaluation/pub/bench/',
-            page_title='Title',
-            page_description='Description',
+        PageGenSettings(
+            TestOutputMetadata(
+                test_folder_path='/home/evaluation/evaluation/pub/bench/',
+                page_title='Title',
+                page_description='Description',
+            ),
             repository_url='https://github.com/chocoteam/choco-solver',
         ),
         [
@@ -133,10 +139,12 @@ def test_table_hidden_if_no_result():
     commit2: str = '614c0134750071ffe08dc376e9cc8caf210974bf'
     output_file_folder: str = './tests/.out/'
     input_data = PageGenInputData(
-        Metadata(
-            test_folder_path='/home/evaluation/evaluation/pub/bench/',
-            page_title='Title',
-            page_description='Description',
+        PageGenSettings(
+            TestOutputMetadata(
+                test_folder_path='/home/evaluation/evaluation/pub/bench/',
+                page_title='Title',
+                page_description='Description',
+            ),
             repository_url='https://github.com/chocoteam/choco-solver',
         ),
         [
@@ -160,10 +168,12 @@ def test_show_both_commits_in_description():
     commit2: str = '614c0134750071ffe08dc376e9cc8caf210974bf'
     output_file_folder: str = './tests/.out/'
     input_data = PageGenInputData(
-        Metadata(
-            test_folder_path='/home/evaluation/evaluation/pub/bench/',
-            page_title='Title',
-            page_description='Description',
+        PageGenSettings(
+            TestOutputMetadata(
+                test_folder_path='/home/evaluation/evaluation/pub/bench/',
+                page_title='Title',
+                page_description='Description',
+            ),
             repository_url='https://github.com/chocoteam/choco-solver',
         ),
         [],
@@ -180,12 +190,14 @@ def test_metadata_are_used_to_generate_front_matter():
     commit2: str = '614c0134750071ffe08dc376e9cc8caf210974bf'
     output_file_folder: str = './tests/.out/'
     input_data = PageGenInputData(
-        Metadata(
-            test_folder_path='/home/evaluation/evaluation/pub/bench/',
-            page_title='Title',
-            page_description='Description',
+        PageGenSettings(
+            TestOutputMetadata(
+                test_folder_path='/home/evaluation/evaluation/pub/bench/',
+                page_title='Title',
+                page_description='Description',
+            ),
             repository_url='http://wesite.com/repository/',
-            similar_percent_limit=50
+            similar_percent_limit=50,
         ),
         [
             TestResult(
