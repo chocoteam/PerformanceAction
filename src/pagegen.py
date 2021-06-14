@@ -135,7 +135,7 @@ def __write_variation(file: TextIOWrapper, diff: Diff):
         else:
             icon = '≈'
             color = '#005C94'
-        file.write(span(color, f'{icon} `{sign}{diff.diff}` (`{sign}{diff.variation}%`)'))
+        file.write(span(color, f'{icon} `{sign}{diff.diff}` (`{sign}{round(diff.variation, 2)}%`)'))
 
 def __write_test_result(file: TextIOWrapper, result: TestResult):
     """Writes test results to the file.
