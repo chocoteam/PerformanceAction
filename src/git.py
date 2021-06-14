@@ -7,7 +7,7 @@ def get_filecontent(filepath: str, filehash: str):
 
     # Get absolute path to current Git repo
     try:
-        repopath = str(subprocess.check_output('git rev-parse --show-toplevel'))
+        repopath = str(subprocess.check_output(['git', 'rev-parse', '--show-toplevel']))
         # Clean output
         repopath = repopath.lstrip("b'").rstrip("n'").rstrip('\\')
     except subprocess.CalledProcessError as e:
@@ -19,7 +19,7 @@ def get_filecontent(filepath: str, filehash: str):
 
     # Get file content from relpath and filehash
     try:
-        filecontent = str(subprocess.check_output(f'git show {filehash}:{relpath}'))
+        filecontent = str(subprocess.check_output(['git', 'show', f'{filehash}:{relpath}']))
         # Clean output
         filecontent = filecontent.lstrip("b'").rstrip("'").replace('\\n', '')
     except subprocess.CalledProcessError as e:
