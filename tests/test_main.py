@@ -10,7 +10,8 @@ def test_the_program_runs():
         repository_url='https://github.com/chocoteam/choco-solver',
     )
 
-    assert os.path.exists('./tests/.out/optimization2.out.md')
+    assert os.path.isfile('./tests/.out/optimization2.out.md')
+    assert os.path.getsize('./tests/.out/optimization2.out.md') > 0
 
 def test_second_file_metadata_used_for_page_generation():
     inner_main(
