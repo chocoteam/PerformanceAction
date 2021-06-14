@@ -32,7 +32,7 @@ def main():
     comp_content = comp_file.parse()
 
     # Rest of the program
-    shared_main(filepath, hashref, hashcomp, ref_content, comp_content, output_path, args.repository_url)
+    shared_main(filepath, hashref, hashcomp, ref_content, comp_content, output_path, args.repository_url, args.similar_percent_limit)
 
 if __name__ == "__main__":
     main()
