@@ -1,4 +1,5 @@
 import pytest
+import os
 from main import inner_main
 
 def test_the_program_runs():
@@ -9,8 +10,7 @@ def test_the_program_runs():
         repository_url='https://github.com/chocoteam/choco-solver',
     )
 
-    f = open('./tests/.out/optimization2.out.md', 'r')
-    file_content = f.read()
+    assert os.path.exists('./tests/.out/optimization2.out.md')
 
 def test_second_file_metadata_used_for_page_generation():
     inner_main(
