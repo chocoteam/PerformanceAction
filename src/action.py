@@ -11,6 +11,8 @@ def main():
     parser.add_argument('hashref', help='Hash value of commit to compare against (reference commit)')
     parser.add_argument('hashcomp', help='Hash value of commit to compare')
     parser.add_argument('output_path', help='Path of folder to output the generated page')
+    parser.add_argument('repository_url', help='URL of the tested code repository (for commit hyperlinks)')
+    parser.add_argument('similar_percent_limit', help='Maximum percentage signifying similarity. It must be positive, as it will be checked for both lower and higher values. If not set, it will default to `1%`', type=float, default=1)
     args = parser.parse_args()
 
     filepath = os.path.abspath(args.filepath)
@@ -30,7 +32,7 @@ def main():
     comp_content = comp_file.parse()
 
     # Rest of the program
-    shared_main(filepath, hashref, hashcomp, ref_content, comp_content, output_path)
+    shared_main(filepath, hashref, hashcomp, ref_content, comp_content, output_path, args.repository_url)
 
 if __name__ == "__main__":
     main()

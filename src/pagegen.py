@@ -2,7 +2,7 @@ import datetime
 import os
 from io import TextIOWrapper
 
-from models import PageGenInputData, TestResult, Diff
+from models import PageGenInputData, Metadata, TestResult, Diff
 
 def generate_page(tests_output_file_name: str, commit1: str, commit2: str, output_file_folder: str, input_data: PageGenInputData):
     """Generates a [Hugo](https://gohugo.io/) page displaying variation between test results.
@@ -26,11 +26,11 @@ def generate_page(tests_output_file_name: str, commit1: str, commit2: str, outpu
     file = __open_page_file(tests_output_file_name, output_file_folder)
 
     # Write Hugo Front Matter
-    __write_front_matter(file, commit1, commit2)
+    __write_front_matter(file, commit1, commit2, input_data.metadata)
 
     # Create file content
     for key, value in processed_data.items():
-        __write_content(file, key, 2, value)
+        __write_content(file, key, 2, value, input_data.metadata)
 
     # Write trailing new line
     file.write('\n')
@@ -92,33 +92,36 @@ def __open_page_file(tests_output_file_name: str, output_file_folder: str):
     output_file_path = os.path.join(output_file_folder, output_file_name)
     return open(output_file_path, "w", encoding="utf-8")
 
-def __write_front_matter(file: TextIOWrapper, commit1: str, commit2: str):
+def __write_front_matter(file: TextIOWrapper, commit1: str, commit2: str, metadata: Metadata):
     """Writes [Hugo Front Matter](heading) in a file.
 
     Args:
         file (TextIOWrapper): A file
         commit1 (str): Hash value of reference commit for test results variation
         commit2 (str): Hash value of compared commit (actual one)
+        metadata (Metadata): Test suite metadata used to generate the page
     """
 
     file.write(f'''---
-title: "Optimization benchmarks"
+title: "{metadata.page_title}"
 date: {datetime.datetime.now().astimezone().isoformat()}
 weight: 1
 description: >
-  Benchmarks of tests ran in optimization scheme.
+  {metadata.page_description}
 
-  Results of [`{commit2[0:7]}`](https://github.com/chocoteam/choco-solver/commit/{commit2}) are compared with [`{commit1[0:7]}`](https://github.com/chocoteam/choco-solver/commit/{commit1}).
+  Results of [`{commit2[0:7]}`]({os.path.join(metadata.repository_url, 'commit', commit2)}) are compared with [`{commit1[0:7]}`]({os.path.join(metadata.repository_url, 'commit', commit1)}).
 ---''')
 
-def __write_variation(file: TextIOWrapper, diff: Diff):
+def __write_variation(file: TextIOWrapper, diff: Diff, metadata: Metadata):
     """Writes variation in a readable way.
 
     Args:
         file (TextIOWrapper): A file
         diff (Diff): A diff object describing the variation
+        metadata (Metadata): Test suite metadata used to generate the page
     """
 
+    # Helper function
     def span(color: str, content: str):
         return f'<span style="color: {color}">{content}</span>'
 
@@ -133,12 +136,12 @@ def __write_variation(file: TextIOWrapper, diff: Diff):
         # If result is equal to last result, show a green equal sign
         file.write(span(neutral_color, '='))
     else:
+        similar_percent_limit = abs(metadata.similar_percent_limit)
         sign = '+' if diff.diff > 0 else ''
-        # FIXME: Unhardcode limit
-        if diff.variation < -1:
+        if diff.variation < -similar_percent_limit:
             icon = '↘︎'
             color = positive_color
-        elif diff.variation > 1:
+        elif diff.variation > similar_percent_limit:
             icon = '↗︎'
             color = negative_color
         else:
@@ -146,12 +149,13 @@ def __write_variation(file: TextIOWrapper, diff: Diff):
             color = neutral_color
         file.write(span(color, f'{icon} `{sign}{diff.diff}` (`{sign}{round(diff.variation, 2)}%`)'))
 
-def __write_test_result(file: TextIOWrapper, result: TestResult):
+def __write_test_result(file: TextIOWrapper, result: TestResult, metadata: Metadata):
     """Writes test results to the file.
 
     Args:
         file (TextIOWrapper): A file
         result (TestResult): The tests results to write
+        metadata (Metadata): Test suite metadata used to generate the page
     """
 
     diff = result.exit_diff
@@ -159,7 +163,7 @@ def __write_test_result(file: TextIOWrapper, result: TestResult):
     # Write value
     file.write(f'\n\n**{diff.label}:** `{diff.value}` ')
     # Write variation
-    __write_variation(file, diff)
+    __write_variation(file, diff, metadata)
 
     # Do not write results evolution table if there was no result
     if not result.diffs:
@@ -174,10 +178,10 @@ def __write_test_result(file: TextIOWrapper, result: TestResult):
 
     for diff in result.diffs:
         file.write(f'\n| `{diff.label}` | `{diff.reference}` | `{diff.value}` | ')
-        __write_variation(file, diff)
+        __write_variation(file, diff, metadata)
         file.write(' |')
 
-def __write_content(file: TextIOWrapper, heading: str, level: int, content: dict):
+def __write_content(file: TextIOWrapper, heading: str, level: int, content: dict, metadata: Metadata):
     """Writes headings to the file.
 
     Args:
@@ -185,11 +189,12 @@ def __write_content(file: TextIOWrapper, heading: str, level: int, content: dict
         heading (str): The heading of this content section
         level (int): The heading level of this content section
         content (dict): A nested dictionary containing path components as keys and TestResult as values
+        metadata (Metadata): Test suite metadata used to generate the page
     """
 
     file.write(f'\n\n{"#" * level} {heading}')
     if isinstance(content, TestResult):
-        __write_test_result(file, content)
+        __write_test_result(file, content, metadata)
     else:
         for key, value in content.items():
-            __write_content(file, key, level + 1, value)
+            __write_content(file, key, level + 1, value, metadata)
