@@ -24,27 +24,31 @@ class TestResult:
         self.diffs = diffs
 class TestOutputMetadata:
     __test__ = False
-    def __init__(self, test_folder_path: str, page_title: str, page_description: str):
+    def __init__(self, test_folder_path: str, page_title: str, page_description: str, code_commit: str):
         """Some metadata used to generate the test results page.
 
         Args:
             test_folder_path (str): Path of folder where test input files are located. Used to remove the path prefix from absolute file paths
             page_title (str): Title of the generated Hugo page
             page_description (str): Description of the generated Hugo page
+            code_commit (str): Hash of the commit used to run tests (in the main repository, where the code change originated)
         """
         self.test_folder_path = test_folder_path
         self.page_title = page_title
         self.page_description = page_description
+        self.code_commit = code_commit
 class PageGenSettings:
-    def __init__(self, test_output_metadata: TestOutputMetadata, repository_url: str, similar_percent_limit: float = 1):
+    def __init__(self, test_output_metadata: TestOutputMetadata, ref_code_commit: str, repository_url: str, similar_percent_limit: float = 1):
         """All metadata used to generate the test results page.
 
         Args:
             test_output_metadata (TestOutputMetadata): Metadata from test output file
+            ref_code_commit (str): Hash of the commit used to run tests (in the main repository, where the code change originated)
             repository_url (str): URL of the tested code repository (for commit hyperlinks)
             similar_percent_limit (float): Maximum percentage signifying similarity.
         """
         self.test_output_metadata = test_output_metadata
+        self.ref_code_commit = ref_code_commit
         self.repository_url = repository_url
         self.similar_percent_limit = similar_percent_limit
 class PageGenInputData:

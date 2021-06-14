@@ -4,8 +4,6 @@ from pagegen import generate_page
 
 def test_with_data():
     tests_output_file_name: str = 'test_with_data.out'
-    commit1: str = '13a4c1dca0dd58d62acc741866fb945f3fe81592'
-    commit2: str = '614c0134750071ffe08dc376e9cc8caf210974bf'
     output_file_folder: str = './tests/.out/'
     input_data = PageGenInputData(
         PageGenSettings(
@@ -13,7 +11,9 @@ def test_with_data():
                 test_folder_path='/home/evaluation/evaluation/pub/bench/',
                 page_title='Title',
                 page_description='Description',
+                code_commit='614c0134750071ffe08dc376e9cc8caf210974bf',
             ),
+            ref_code_commit='13a4c1dca0dd58d62acc741866fb945f3fe81592',
             repository_url='https://github.com/chocoteam/choco-solver',
         ),
         [
@@ -60,12 +60,10 @@ def test_with_data():
         ],
     )
 
-    generate_page(tests_output_file_name, commit1, commit2, output_file_folder, input_data)
+    generate_page(tests_output_file_name, output_file_folder, input_data)
 
 def test_failure_color():
     tests_output_file_name: str = 'test_failure_color.out'
-    commit1: str = '13a4c1dca0dd58d62acc741866fb945f3fe81592'
-    commit2: str = '614c0134750071ffe08dc376e9cc8caf210974bf'
     output_file_folder: str = './tests/.out/'
     input_data = PageGenInputData(
         PageGenSettings(
@@ -73,7 +71,9 @@ def test_failure_color():
                 test_folder_path='/home/evaluation/evaluation/pub/bench/',
                 page_title='Title',
                 page_description='Description',
+                code_commit='614c0134750071ffe08dc376e9cc8caf210974bf',
             ),
+            ref_code_commit='13a4c1dca0dd58d62acc741866fb945f3fe81592',
             repository_url='https://github.com/chocoteam/choco-solver',
         ),
         [
@@ -95,7 +95,7 @@ def test_failure_color():
         ],
     )
 
-    generate_page(tests_output_file_name, commit1, commit2, output_file_folder, input_data)
+    generate_page(tests_output_file_name, output_file_folder, input_data)
 
     f = open('./tests/.out/test_failure_color.md', 'r')
     file_content = f.read()
@@ -105,8 +105,6 @@ def test_failure_color():
 
 def test_rounded_percentages():
     tests_output_file_name: str = 'test_rounded_percentages.out'
-    commit1: str = '13a4c1dca0dd58d62acc741866fb945f3fe81592'
-    commit2: str = '614c0134750071ffe08dc376e9cc8caf210974bf'
     output_file_folder: str = './tests/.out/'
     input_data = PageGenInputData(
         PageGenSettings(
@@ -114,7 +112,9 @@ def test_rounded_percentages():
                 test_folder_path='/home/evaluation/evaluation/pub/bench/',
                 page_title='Title',
                 page_description='Description',
+                code_commit='614c0134750071ffe08dc376e9cc8caf210974bf',
             ),
+            ref_code_commit='13a4c1dca0dd58d62acc741866fb945f3fe81592',
             repository_url='https://github.com/chocoteam/choco-solver',
         ),
         [
@@ -126,7 +126,7 @@ def test_rounded_percentages():
         ],
     )
 
-    generate_page(tests_output_file_name, commit1, commit2, output_file_folder, input_data)
+    generate_page(tests_output_file_name, output_file_folder, input_data)
 
     f = open("./tests/.out/test_rounded_percentages.md", "r")
     file_content = f.read()
@@ -135,8 +135,6 @@ def test_rounded_percentages():
 
 def test_table_hidden_if_no_result():
     tests_output_file_name: str = 'test_table_hidden_if_no_result.out'
-    commit1: str = '13a4c1dca0dd58d62acc741866fb945f3fe81592'
-    commit2: str = '614c0134750071ffe08dc376e9cc8caf210974bf'
     output_file_folder: str = './tests/.out/'
     input_data = PageGenInputData(
         PageGenSettings(
@@ -144,7 +142,9 @@ def test_table_hidden_if_no_result():
                 test_folder_path='/home/evaluation/evaluation/pub/bench/',
                 page_title='Title',
                 page_description='Description',
+                code_commit='614c0134750071ffe08dc376e9cc8caf210974bf',
             ),
+            ref_code_commit='13a4c1dca0dd58d62acc741866fb945f3fe81592',
             repository_url='https://github.com/chocoteam/choco-solver',
         ),
         [
@@ -156,7 +156,7 @@ def test_table_hidden_if_no_result():
         ],
     )
 
-    generate_page(tests_output_file_name, commit1, commit2, output_file_folder, input_data)
+    generate_page(tests_output_file_name, output_file_folder, input_data)
     f = open('./tests/.out/test_table_hidden_if_no_result.md', 'r')
     file_content = f.read()
     assert '| Measure' not in file_content
@@ -164,8 +164,6 @@ def test_table_hidden_if_no_result():
 
 def test_show_both_commits_in_description():
     tests_output_file_name: str = 'test_show_both_commits_in_description.out'
-    commit1: str = '13a4c1dca0dd58d62acc741866fb945f3fe81592'
-    commit2: str = '614c0134750071ffe08dc376e9cc8caf210974bf'
     output_file_folder: str = './tests/.out/'
     input_data = PageGenInputData(
         PageGenSettings(
@@ -173,21 +171,21 @@ def test_show_both_commits_in_description():
                 test_folder_path='/home/evaluation/evaluation/pub/bench/',
                 page_title='Title',
                 page_description='Description',
+                code_commit='614c0134750071ffe08dc376e9cc8caf210974bf',
             ),
+            ref_code_commit='13a4c1dca0dd58d62acc741866fb945f3fe81592',
             repository_url='https://github.com/chocoteam/choco-solver',
         ),
         [],
     )
 
-    generate_page(tests_output_file_name, commit1, commit2, output_file_folder, input_data)
+    generate_page(tests_output_file_name, output_file_folder, input_data)
     f = open('./tests/.out/test_show_both_commits_in_description.md', 'r')
     file_content = f.read()
     assert 'Results of [`614c013`](https://github.com/chocoteam/choco-solver/commit/614c0134750071ffe08dc376e9cc8caf210974bf) are compared with [`13a4c1d`](https://github.com/chocoteam/choco-solver/commit/13a4c1dca0dd58d62acc741866fb945f3fe81592).' in file_content
 
 def test_metadata_are_used_to_generate_front_matter():
     tests_output_file_name: str = 'test_metadata_are_used_to_generate_front_matter.out'
-    commit1: str = '13a4c1dca0dd58d62acc741866fb945f3fe81592'
-    commit2: str = '614c0134750071ffe08dc376e9cc8caf210974bf'
     output_file_folder: str = './tests/.out/'
     input_data = PageGenInputData(
         PageGenSettings(
@@ -195,7 +193,9 @@ def test_metadata_are_used_to_generate_front_matter():
                 test_folder_path='/home/evaluation/evaluation/pub/bench/',
                 page_title='Title',
                 page_description='Description',
+                code_commit='1234567890',
             ),
+            ref_code_commit='abcdefghij',
             repository_url='http://wesite.com/repository/',
             similar_percent_limit=50,
         ),
@@ -208,10 +208,10 @@ def test_metadata_are_used_to_generate_front_matter():
         ],
     )
 
-    generate_page(tests_output_file_name, commit1, commit2, output_file_folder, input_data)
+    generate_page(tests_output_file_name, output_file_folder, input_data)
     f = open('./tests/.out/test_metadata_are_used_to_generate_front_matter.md', 'r')
     file_content = f.read()
     assert 'title: "Title"' in file_content
     assert 'description: >\n  Description\n\n  Results of' in file_content
-    assert 'Results of [`614c013`](http://wesite.com/repository/commit/614c0134750071ffe08dc376e9cc8caf210974bf) are compared with [`13a4c1d`](http://wesite.com/repository/commit/13a4c1dca0dd58d62acc741866fb945f3fe81592).' in file_content
+    assert 'Results of [`1234567`](http://wesite.com/repository/commit/1234567890) are compared with [`abcdefg`](http://wesite.com/repository/commit/abcdefghij).' in file_content
     assert '≈ `-10` (`-20%`)' in file_content
