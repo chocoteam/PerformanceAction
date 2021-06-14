@@ -56,3 +56,28 @@ def test_with_data():
     )
 
     generate_page(tests_output_file_name, commit1, commit2, output_file_folder, input_data)
+
+def test_table_hidden_if_no_result():
+    tests_output_file_name: str = 'test_table_hidden_if_no_result.out'
+    commit1: str = '13a4c1dca0dd58d62acc741866fb945f3fe81592'
+    commit2: str = '614c0134750071ffe08dc376e9cc8caf210974bf'
+    output_file_folder: str = './tests/.out/'
+    input_data = PageGenInputData(
+        Metadata(
+            '/home/evaluation/evaluation/pub/bench/',
+        ),
+        [
+            TestResult(
+                '/home/evaluation/evaluation/pub/bench/XCSP18/CrosswordDesign/CrosswordDesign-03-4-rom_c18',
+                Diff('Exit value 1', 0, 0, 0, 0),
+                []
+            ),
+        ],
+    )
+
+    generate_page(tests_output_file_name, commit1, commit2, output_file_folder, input_data)
+
+    f = open('./tests/.out/test_table_hidden_if_no_result.md', 'r')
+    file_content = f.read()
+    assert '| Measure' not in file_content
+    assert '*The test generated no result.*' in file_content
