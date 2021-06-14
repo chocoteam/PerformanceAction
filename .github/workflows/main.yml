@@ -2,6 +2,11 @@ name: Compare results
 
 on: [push]
 
+env:
+  TRACKED_JSON_PATH: './data'
+  TRACKED_JSON_NAME: 'out' # .json is hardcoded
+  OUTPUT_PATH: './.out'
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "compare"
@@ -25,4 +30,5 @@ jobs:
       # Runs the Python script for this action
       - name: Compare results
         run: |
-          python ./src/action.py ./data/out.json $(git log -n 1 --skip 1 --pretty=format:%H ./data/out.json) ${GITHUB_SHA} ./.out
+          python ./src/action.py ${TRACKED_JSON_PATH}/${TRACKED_JSON_NAME}.json $(git log -n 1 --skip 1 --pretty=format:%H ${TRACKED_JSON_PATH}/${TRACKED_JSON_NAME}.json) ${GITHUB_SHA} ${OUTPUT_PATH}
+          cat ${OUTPUT_PATH}/${TRACKED_JSON_NAME}.md
