@@ -7,25 +7,25 @@
             "name": "/home/evaluation/evaluation/pub/bench/lorem/ipsum/1",
             "stats": [
                 {"bound": 9, "time": 0},
-                {"bound": 12, "time": 2}
+                {"bound": 12, "time": 4}
             ],
-            "exit": {"time": 3, "status": "terminated"}
+            "exit": {"time": 5, "status": "terminated"}
         },
         {
             "name": "/home/evaluation/evaluation/pub/bench/lorem/ipsum/2",
             "stats": [
                 {"bound": 9, "time": 0},
-                {"bound": 12, "time": 2}
+                {"bound": 12, "time": 1}
             ],
-            "exit": {"time": 3, "status": "terminated"}
+            "exit": {"time": 2, "status": "terminated"}
         },
         {
             "name": "/home/evaluation/evaluation/pub/bench/lorem/ipsum/3",
             "stats": [
                 {"bound": 9, "time": 0},
-                {"bound": 12, "time": 2}
+                {"bound": 12, "time": 3}
             ],
-            "exit": {"time": 3, "status": "terminated"}
+            "exit": {"time": 4, "status": "terminated"}
         }
     ]
 }
