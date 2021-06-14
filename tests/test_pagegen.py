@@ -141,3 +141,20 @@ def test_table_hidden_if_no_result():
     file_content = f.read()
     assert '| Measure' not in file_content
     assert '*The test generated no result.*' in file_content
+
+def test_show_both_commits_in_description():
+    tests_output_file_name: str = 'test_show_both_commits_in_description.out'
+    commit1: str = '13a4c1dca0dd58d62acc741866fb945f3fe81592'
+    commit2: str = '614c0134750071ffe08dc376e9cc8caf210974bf'
+    output_file_folder: str = './tests/.out/'
+    input_data = PageGenInputData(
+        Metadata(
+            '/home/evaluation/evaluation/pub/bench/',
+        ),
+        [],
+    )
+
+    generate_page(tests_output_file_name, commit1, commit2, output_file_folder, input_data)
+    f = open('./tests/.out/test_show_both_commits_in_description.md', 'r')
+    file_content = f.read()
+    assert 'Results of [`614c013`](https://github.com/chocoteam/choco-solver/commit/614c0134750071ffe08dc376e9cc8caf210974bf) are compared with [`13a4c1d`](https://github.com/chocoteam/choco-solver/commit/13a4c1dca0dd58d62acc741866fb945f3fe81592).' in file_content

@@ -26,7 +26,7 @@ def generate_page(tests_output_file_name: str, commit1: str, commit2: str, outpu
     file = __open_page_file(tests_output_file_name, output_file_folder)
 
     # Write Hugo Front Matter
-    __write_front_matter(file, commit1)
+    __write_front_matter(file, commit1, commit2)
 
     # Create file content
     for key, value in processed_data.items():
@@ -92,12 +92,13 @@ def __open_page_file(tests_output_file_name: str, output_file_folder: str):
     output_file_path = os.path.join(output_file_folder, output_file_name)
     return open(output_file_path, "w", encoding="utf-8")
 
-def __write_front_matter(file: TextIOWrapper, reference_commit: str):
+def __write_front_matter(file: TextIOWrapper, commit1: str, commit2: str):
     """Writes [Hugo Front Matter](heading) in a file.
 
     Args:
         file (TextIOWrapper): A file
-        reference_commit (str): Hash value of reference commit for test results variation
+        commit1 (str): Hash value of reference commit for test results variation
+        commit2 (str): Hash value of compared commit (actual one)
     """
 
     file.write(f'''---
@@ -107,7 +108,7 @@ weight: 1
 description: >
   Benchmarks of tests ran in optimization scheme.
 
-  Results are compared with [`{reference_commit[0:7]}`](https://github.com/chocoteam/choco-solver/commit/{reference_commit}).
+  Results of [`{commit2[0:7]}`](https://github.com/chocoteam/choco-solver/commit/{commit2}) are compared with [`{commit1[0:7]}`](https://github.com/chocoteam/choco-solver/commit/{commit1}).
 ---''')
 
 def __write_variation(file: TextIOWrapper, diff: Diff):
