@@ -122,21 +122,29 @@ def __write_variation(file: TextIOWrapper, diff: Diff):
     def span(color: str, content: str):
         return f'<span style="color: {color}">{content}</span>'
 
-    if diff.diff == 0:
-        file.write(span('#005C94', '='))
+    neutral_color = '#005C94'
+    negative_color = 'red'
+    positive_color = 'green'
+
+    if diff.value == -1:
+        # If result is now `-1`, show a red cross
+        file.write(span(negative_color, f'⨯ (was `{diff.reference}`)'))
+    elif diff.diff == 0:
+        # If result is equal to last result, show a green equal sign
+        file.write(span(neutral_color, '='))
     else:
         sign = '+' if diff.diff > 0 else ''
         # FIXME: Unhardcode limit
         if diff.variation < -1:
             icon = '↘︎'
-            color = 'green'
+            color = positive_color
         elif diff.variation > 1:
             icon = '↗︎'
-            color = 'red'
+            color = negative_color
         else:
             icon = '≈'
-            color = '#005C94'
-        file.write(span(color, f'{icon} `{sign}{diff.diff}` (`{sign}{diff.variation}%`)'))
+            color = neutral_color
+        file.write(span(color, f'{icon} `{sign}{diff.diff}` (`{sign}{round(diff.variation, 2)}%`)'))
 
 def __write_test_result(file: TextIOWrapper, result: TestResult):
     """Writes test results to the file.
@@ -152,6 +160,11 @@ def __write_test_result(file: TextIOWrapper, result: TestResult):
     file.write(f'\n\n**{diff.label}:** `{diff.value}` ')
     # Write variation
     __write_variation(file, diff)
+
+    # Do not write results evolution table if there was no result
+    if not result.diffs:
+        file.write('\n\n*The test generated no result.*')
+        return
 
     # Write diff table
     file.write(f'''\n\nEvolution of last results:
