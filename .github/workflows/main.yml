@@ -1,6 +1,9 @@
 name: Compare results
 
-on: [push]
+on:
+  push:
+    paths:
+      - 'data/*'
 
 env:
   TRACKED_JSON_PATH: './data'
