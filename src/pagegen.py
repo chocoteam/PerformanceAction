@@ -57,7 +57,7 @@ def __process_input_data(input_data: PageGenInputData):
     # Populate the dictionary
     for test_result in input_data.results:
         # Remove file path prefix
-        file_path: str = test_result.file_path.removeprefix(prefix)
+        file_path: str = os.path.relpath(test_result.file_path, prefix)
 
         # Split file path in components
         # Note: Tests are run on Linux, so it's ok to split on `/`
