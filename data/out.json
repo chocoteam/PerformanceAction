@@ -7,9 +7,9 @@
             "name": "/home/evaluation/evaluation/pub/bench/lorem/ipsum/1",
             "stats": [
                 {"bound": 9, "time": 0},
-                {"bound": 12, "time": 4}
+                {"bound": 12, "time": 5}
             ],
-            "exit": {"time": 5, "status": "terminated"}
+            "exit": {"time": 6, "status": "terminated"}
         },
         {
             "name": "/home/evaluation/evaluation/pub/bench/lorem/ipsum/2",
