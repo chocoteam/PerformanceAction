@@ -28,27 +28,60 @@ The program can be used in different ways: from a GitHub Action or on a local ma
 
 1. Commit a test results file ([see format](#input-file-format))
 2. Update the test results file
-3. Run `python action.py` with the following positional arguments:
+3. Run `python action.py`
 
-   | Argument name | Description |
-   | ------------- | ----------- |
-   | `jsondir`     | Path of JSON directory to parse files from |
-   | `hashref`     | Hash value of commit to compare against (reference commit) |
-   | `hashcomp`    | Hash value of commit to compare |
-   | `output_path` | Path of folder to output the generated page |
+   <details>
+     <summary>Tip: Run <code>python action.py -h</code> for help about required arguments.</summary>
+
+     ```text
+     usage: action.py [-h] -d TRACKED_DIR -o OUTPUT_PATH --code-repo REPOSITORY_URL [--limit SIMILAR_PERCENT_LIMIT] hash_ref hash_comp
+
+     positional arguments:
+       hash_ref              Hash value of commit to compare against (reference commit)
+       hash_comp             Hash value of commit to compare
+
+     optional arguments:
+       -h, --help            show this help message and exit
+       -d TRACKED_DIR, --directory TRACKED_DIR
+                             Path to directory to check for changes
+       -o OUTPUT_PATH, --output OUTPUT_PATH
+                             Path of folder to output the generated page
+       --code-repo REPOSITORY_URL
+                             URL of the tested code repository (for commit hyperlinks)
+       --limit SIMILAR_PERCENT_LIMIT
+                             Maximum percentage signifying similarity. It must be positive, as it will be checked for both lower and higher values. If not set, it
+                             will default to 1%
+     ```
+
+   </details>
 
 ### On your computer
 
 1. Create two test results files ([see format](#input-file-format))
-2. Run `python main.py` with the following positional arguments:
+2. Run `python main.py`
 
-   | Argument name | Description |
-   | ------------- | ----------- |
-   | `ref_file_path` | Path to JSON file to compare against (reference file) |
-   | `comp_file_path` | Path to JSON file to compare |
-   | `output_path` | Path of folder to output the generated page |
-   | `repository_url` | URL of the tested code repository (for commit hyperlinks)  |
-   | `similar_percent_limit` | Maximum percentage signifying similarity. It must be positive, as it will be checked for both lower and higher values. If not set, it will default to `1%` |
+   <details>
+     <summary>Tip: Run <code>python main.py -h</code> for help about required arguments.</summary>
+
+     ```text
+     usage: main.py [-h] -o OUTPUT_PATH --code-repo REPOSITORY_URL [--limit SIMILAR_PERCENT_LIMIT] ref_file_path comp_file_path
+
+     positional arguments:
+       ref_file_path         Path to JSON file to compare against (reference file)
+       comp_file_path        Path to JSON file to compare
+
+     optional arguments:
+       -h, --help            show this help message and exit
+       -o OUTPUT_PATH, --output OUTPUT_PATH
+                             Path of folder to output the generated page
+       --code-repo REPOSITORY_URL
+                             URL of the tested code repository (for commit hyperlinks)
+       --limit SIMILAR_PERCENT_LIMIT
+                             Maximum percentage signifying similarity. It must be positive, as it will be checked for both lower and higher values. If not set, it
+                             will default to 1%
+     ```
+
+   </details>
 
 ## Input file format
 
@@ -122,7 +155,7 @@ Results found are JSON objects with arbitrary structure. As of now, results look
 
 The generated page is meant to be used in [Choco's website](https://choco-solver.org). The website, maintained under [chocoteam/website](https://github.com/chocoteam/website), uses [Hugo](https://gohugo.io) as a static site generator. The generated page is therefore a [Markdown](https://en.wikipedia.org/wiki/Markdown) file with YAML [Front Matter](https://gohugo.io/content-management/front-matter/).
 
-It lists all input files used by a test suite, netsing them depending on their file path.
+It lists all input files used by a test suite, nesting them depending on their file path.
 
 <!-- TODO: Insert example screenshot -->
 
