@@ -1,6 +1,9 @@
 {
     "metadata": {
-        "testFolderPath": "/home/evaluation/evaluation/pub/bench/"
+        "testFolderPath": "/home/evaluation/evaluation/pub/bench/",
+        "pageTitle": "Optimization benchmarks 1",
+        "pageDescription": "Benchmarks of tests ran in optimization scheme.",
+        "codeCommit": "13a4c1dca0dd58d62acc741866fb945f3fe81592"
     },
     "results": [
         {
