@@ -166,7 +166,7 @@ It lists all input files used by a test suite, nesting them depending on their f
 ### Run tests
 
 1. Install [`pytest`](https://docs.pytest.org/en/6.2.x/getting-started.html#install-pytest)
-2. Run `pytest` in project folder
+2. Run `pytest` or `python -m pytest` in project folder
 
 ---
 
