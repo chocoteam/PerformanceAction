@@ -26,6 +26,11 @@
                 {"bound": 18, "time": 3}
             ],
             "exit": {"time": 4, "status": "terminated"}
+        },
+        {
+            "name": "/home/evaluation/evaluation/pub/bench/lorem/ipsum/4",
+            "stats": [],
+            "exit": {"time": -1, "status": "failed"}
         }
     ]
 }
