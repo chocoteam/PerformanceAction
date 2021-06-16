@@ -10,17 +10,19 @@ class Comparator():
         for result_ref in self.dataref[RawDataKeys().results_key]:
             try:
                 result_comp = self.pair(result_ref)
-                data_ref = RawData.from_result(result_ref)
-                data_comp = RawData.from_result(result_comp)
-
-                result = TestResult(
-                    data_ref.path,
-                    Comparator.make_exit_diff(data_ref, data_comp),
-                    Comparator.make_diffs(data_ref, data_comp),
-                )
-                comp_results.append(result)
             except Exception as e:
-                print(f'Could not pair results for {result_ref[RawDataKeys().result_input_file_path_key]}. Skipping')
+                print(f'Could not pair results for {result_ref[RawDataKeys().result_input_file_path_key]}. Skipping.')
+                continue
+
+            data_ref = RawData.from_result(result_ref)
+            data_comp = RawData.from_result(result_comp)
+
+            result = TestResult(
+                data_ref.path,
+                Comparator.make_exit_diff(data_ref, data_comp),
+                Comparator.make_diffs(data_ref, data_comp),
+            )
+            comp_results.append(result)
 
         return comp_results
 

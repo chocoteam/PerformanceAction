@@ -23,9 +23,9 @@ class RawData:
     def from_result(result):
         keys = RawDataKeys()
         return RawData(
-            result[keys.result_input_file_path_key],
-            result[keys.result_stats_key],
-            ExitValue(
+            path=result[keys.result_input_file_path_key],
+            stats=result[keys.result_stats_key],
+            exit=ExitValue(
                 result[keys.exit_key][keys.exit_value_key],
                 result[keys.exit_key][keys.exit_status_key],
             ),
