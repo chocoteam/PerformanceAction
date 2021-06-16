@@ -8,6 +8,11 @@ on:
 env:
   TRACKED_JSON_PATH: './data'
   OUTPUT_PATH: './.out'
+  CODE_REPO: 'https://github.com/chocoteam/choco-solver'
+  #GITHUB_TEAM: 'chocoteam'
+  #WEBSITE_REPO: 'website'
+  GITHUB_TEAM: 'RemiBardon'
+  WEBSITE_REPO: 'test-performance-action'
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -30,7 +35,25 @@ jobs:
           python-version: 3.8
 
       # Runs the Python script for this action
+      # Compares current version with previous modification of TRACKED_JSON_PATH
       - name: Compare results
         run: |
-          python ./src/action.py ${TRACKED_JSON_PATH} $(git log -n 1 --skip 1 --pretty=format:%H ${TRACKED_JSON_PATH}) ${GITHUB_SHA} ${OUTPUT_PATH}
-          cat ${OUTPUT_PATH}/*.md
+          COMMIT_REF=$(git log -n 1 --skip 1 --pretty=format:%H ${TRACKED_JSON_PATH})
+          COMMIT_COMP=$GITHUB_SHA
+          python ./src/action.py $COMMIT_REF $COMMIT_COMP -d $TRACKED_JSON_PATH -o $OUTPUT_PATH --code-repo $CODE_REPO
+          # cat $OUTPUT_PATH/*.md # Print files for debug purposes
+
+      # Pushes the created files
+      - name: Push file to website repository
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          #API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+          # Hard-coded token for tests (will be deleted)
+          API_TOKEN_GITHUB: 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
+        with:
+          source-directory: $OUTPUT_PATH
+          destination-github-username: $GITHUB_TEAM
+          destination-repository-name: $WEBSITE_REPO
+          user-email: performance-action@chocoteam.org
+          user-name: Performance Action
+          target-branch: main
