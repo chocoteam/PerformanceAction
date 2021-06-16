@@ -29,16 +29,16 @@ def get_filecontent(filepath: str, filehash: str):
 
     return filecontent
 
-def get_changed_jsons(path: str, commit_hash: str):
+def get_changed_files(path: str, commit_hash: str):
     repopath = get_repo_path()
     # Get list of changed files in specific path for a specific commit
     try:
-        changed_jsons = str(subprocess.check_output(['git', 'diff-tree', '--no-commit-id', '--name-only', '-r', commit_hash, path]))
+        files = str(subprocess.check_output(['git', 'diff-tree', '--no-commit-id', '--name-only', '-r', commit_hash, path]))
         # Clean output
-        changed_jsons = changed_jsons.lstrip("b'").rstrip("n'").rstrip('\\')
-        changed_jsons = changed_jsons.split('\\n')
-        for changed_json in changed_jsons:
-            changed_json = os.path.join(repopath, changed_json)
-        return changed_jsons
+        files = files.lstrip("b'").rstrip("n'").rstrip('\\')
+        files = files.split('\\n')
+        for f in files:
+            f = os.path.join(repopath, f)
+        return files
     except subprocess.CalledProcessError as e:
-        print(f'Could not find any modified json in {path} for commit {commit_hash}')
+        print(f'Could not search for modified files in {path} for commit {commit_hash}. Error: {e.returncode}')
