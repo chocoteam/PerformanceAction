@@ -36,7 +36,7 @@ def main():
     )
     args = parser.parse_args()
 
-    inner_main(args.ref_file_path, args.comp_file_path, args.output_path, args.repository_url, args.limit)
+    inner_main(args.ref_file_path, args.comp_file_path, args.output_path, args.repository_url, args.similar_percent_limit)
 
 def inner_main(ref_file_path: str, comp_file_path: str, output_path: str, repository_url: str, similar_percent_limit: float=1):
     ref_file_path = os.path.abspath(ref_file_path)
