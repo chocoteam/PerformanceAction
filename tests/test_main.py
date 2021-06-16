@@ -21,7 +21,7 @@ def test_second_file_metadata_used_for_page_generation():
         repository_url='https://github.com/chocoteam/choco-solver',
     )
 
-    f = open('./tests/.out/new_optimization.out.md', 'r')
+    f = open('./tests/.out/new_optimization.out.md', 'r', encoding="utf-8")
     file_content = f.read()
     assert 'A new title' in file_content
     assert 'A new description.' in file_content

@@ -97,7 +97,7 @@ def test_failure_color():
 
     generate_page(tests_output_file_name, output_file_folder, input_data)
 
-    f = open('./tests/.out/test_failure_color.md', 'r')
+    f = open('./tests/.out/test_failure_color.md', 'r', encoding="utf-8")
     file_content = f.read()
     assert '**Exit value 1:** `-1` <span style="color: red">⨯ (was `-1`)</span>' in file_content
     assert '**Exit value 2:** `-1` <span style="color: red">⨯ (was `2`)</span>' in file_content
@@ -128,7 +128,7 @@ def test_rounded_percentages():
 
     generate_page(tests_output_file_name, output_file_folder, input_data)
 
-    f = open("./tests/.out/test_rounded_percentages.md", "r")
+    f = open("./tests/.out/test_rounded_percentages.md", "r", encoding="utf-8")
     file_content = f.read()
     assert "7.692" not in file_content
     assert "7.69" in file_content
@@ -157,7 +157,7 @@ def test_table_hidden_if_no_result():
     )
 
     generate_page(tests_output_file_name, output_file_folder, input_data)
-    f = open('./tests/.out/test_table_hidden_if_no_result.md', 'r')
+    f = open('./tests/.out/test_table_hidden_if_no_result.md', 'r', encoding="utf-8")
     file_content = f.read()
     assert '| Measure' not in file_content
     assert '*The test generated no result.*' in file_content
@@ -180,7 +180,7 @@ def test_show_both_commits_in_description():
     )
 
     generate_page(tests_output_file_name, output_file_folder, input_data)
-    f = open('./tests/.out/test_show_both_commits_in_description.md', 'r')
+    f = open('./tests/.out/test_show_both_commits_in_description.md', 'r', encoding="utf-8")
     file_content = f.read()
     assert 'Results of [`614c013`](https://github.com/chocoteam/choco-solver/commit/614c0134750071ffe08dc376e9cc8caf210974bf) are compared with [`13a4c1d`](https://github.com/chocoteam/choco-solver/commit/13a4c1dca0dd58d62acc741866fb945f3fe81592).' in file_content
 
@@ -209,7 +209,7 @@ def test_metadata_are_used_to_generate_front_matter():
     )
 
     generate_page(tests_output_file_name, output_file_folder, input_data)
-    f = open('./tests/.out/test_metadata_are_used_to_generate_front_matter.md', 'r')
+    f = open('./tests/.out/test_metadata_are_used_to_generate_front_matter.md', 'r', encoding="utf-8")
     file_content = f.read()
     assert 'title: "Title"' in file_content
     assert 'description: >\n  Description\n\n  Results of' in file_content
