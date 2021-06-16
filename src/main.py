@@ -37,6 +37,7 @@ def inner_main(ref_file_path: str, comp_file_path: str, output_path: str, reposi
 
     # Rest of the program
     shared_main(comp_file_path, ref_content, comp_content, output_path, repository_url, similar_percent_limit)
+    print(f'Results have been written in {output_path}')
 
 def shared_main(input_file_path: str, ref_content, comp_content, output_path: str, repository_url: str, similar_percent_limit: float=1):
     # Comparison
