@@ -22,10 +22,32 @@ class TestResult:
         self.file_path = file_path
         self.exit_diff = exit_diff
         self.diffs = diffs
-class Metadata:
-    def __init__(self, test_folder_path: str):
+class TestOutputMetadata:
+    __test__ = False
+    def __init__(self, test_folder_path: str, page_title: str, page_description: str):
+        """Some metadata used to generate the test results page.
+
+        Args:
+            test_folder_path (str): Path of folder where test input files are located. Used to remove the path prefix from absolute file paths
+            page_title (str): Title of the generated Hugo page
+            page_description (str): Description of the generated Hugo page
+        """
         self.test_folder_path = test_folder_path
+        self.page_title = page_title
+        self.page_description = page_description
+class PageGenSettings:
+    def __init__(self, test_output_metadata: TestOutputMetadata, repository_url: str, similar_percent_limit: float = 1):
+        """All metadata used to generate the test results page.
+
+        Args:
+            test_output_metadata (TestOutputMetadata): Metadata from test output file
+            repository_url (str): URL of the tested code repository (for commit hyperlinks)
+            similar_percent_limit (float): Maximum percentage signifying similarity.
+        """
+        self.test_output_metadata = test_output_metadata
+        self.repository_url = repository_url
+        self.similar_percent_limit = similar_percent_limit
 class PageGenInputData:
-    def __init__(self, metadata: Metadata, results: List[TestResult]):
-        self.metadata = metadata
+    def __init__(self, settings: PageGenSettings, results: List[TestResult]):
+        self.settings = settings
         self.results = results
