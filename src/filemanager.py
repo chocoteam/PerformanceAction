@@ -2,10 +2,10 @@ import git
 import json
 
 class FileManager():
-    def __init__(self, filepath: str, filehash: str):
-        self.filepath = filepath
-        self.filehash = filehash
+    def __init__(self, file_path: str, file_hash: str):
+        self.file_path = file_path
+        self.file_hash = file_hash
 
     def parse(self):
-        rawcontent = git.get_filecontent(self.filepath, self.filehash)
+        rawcontent = git.get_file_content(self.file_path, self.file_hash)
         return json.loads(rawcontent)
