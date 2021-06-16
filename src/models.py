@@ -1,5 +1,14 @@
 from typing import List
 
+class RawDataKeys:
+    def __init__(self):
+        self.results_key = 'results'
+        self.result_input_file_path_key = 'name'
+        self.result_stats_key = 'stats'
+        self.exit_key = 'exit'
+        self.exit_value_key = 'time'
+        self.exit_status_key = 'status'
+
 class ExitValue:
     def __init__(self, time: int, status: str):
         self.time = time
@@ -9,6 +18,22 @@ class RawData:
         self.path = path
         self.stats = stats
         self.exit = exit
+
+    @staticmethod
+    def from_result(result):
+        keys = RawDataKeys()
+        return RawData(
+            result[keys.result_input_file_path_key],
+            result[keys.result_stats_key],
+            ExitValue(
+                result[keys.exit_key][keys.exit_value_key],
+                result[keys.exit_key][keys.exit_status_key],
+            ),
+        )
+
+    @staticmethod
+    def keys():
+        return RawDataKeys()
 class Diff:
     def __init__(self, label: str, reference: float, value: float, diff: float, variation: float):
         self.label = label

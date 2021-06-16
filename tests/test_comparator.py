@@ -6,8 +6,8 @@ from comparator import Comparator
 from models import TestResult, Diff
 
 def test_1():
-    ref_file = open('./tests/data/input/optimization1.out.json', 'r')
-    comp_file = open('./tests/data/input/optimization2.out.json', 'r')
+    ref_file = open('./tests/data/input/optimization1.out.json', 'r', encoding="utf-8")
+    comp_file = open('./tests/data/input/optimization2.out.json', 'r', encoding="utf-8")
     ref_content = json.loads(ref_file.read())
     comp_content = json.loads(comp_file.read())
     ref_file.close()

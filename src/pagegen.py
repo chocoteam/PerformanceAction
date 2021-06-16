@@ -100,6 +100,9 @@ def __write_front_matter(file: TextIOWrapper, settings: PageGenSettings):
         settings (PageGenSettings): Metadata used to generate the page
     """
 
+    # Remove trailing `/` in repository URL if needed
+    settings.repository_url = settings.repository_url.rstrip('/')
+
     commit1 = settings.ref_code_commit
     commit2 = settings.test_output_metadata.code_commit
     file.write(f'''---
@@ -109,7 +112,7 @@ weight: 1
 description: >
   {settings.test_output_metadata.page_description}
 
-  Results of [`{commit2[0:7]}`]({os.path.join(settings.repository_url, 'commit', commit2)}) are compared with [`{commit1[0:7]}`]({os.path.join(settings.repository_url, 'commit', commit1)}).
+  Results of [`{commit2[0:7]}`]({settings.repository_url}/commit/{commit2}) are compared with [`{commit1[0:7]}`]({settings.repository_url}/commit/{commit1}).
 ---''')
 
 def __pretty_variation(diff: Diff, settings: PageGenSettings):
