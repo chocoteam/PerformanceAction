@@ -111,32 +111,32 @@ The path to this input file must be unique as it determines the way the test res
     "results": [
         {
             "name": "/home/evaluation/evaluation/pub/bench/XCSP18/CrosswordDesign/CrosswordDesign-03-4-rom_c18",
-            "results": [{"bound":9,"time":0},{"bound":12,"time":0}],
+            "stats": [{"bound":9,"time":0},{"bound":12,"time":0}],
             "exit": {"time": 0, "status": "terminated"}
         },
         {
             "name": "/home/evaluation/evaluation/pub/bench/XCSP18/CrosswordDesign/CrosswordDesign-06-4-rom_c18",
-            "results": [{"bound":30,"time":9},{"bound":36,"time":9},{"bound":38,"time":9},{"bound":40,"time":10},{"bound":44,"time":10},{"bound":48,"time":148},{"bound":52,"time":221}],
+            "stats": [{"bound":30,"time":9},{"bound":36,"time":9},{"bound":38,"time":9},{"bound":40,"time":10},{"bound":44,"time":10},{"bound":48,"time":148},{"bound":52,"time":221}],
             "exit": {"time": -1, "status": "stop"}
         },
         {
             "name": "/home/evaluation/evaluation/pub/bench/XCSP18/NurseRostering/NurseRostering-17_c18",
-            "results": [],
+            "stats": [],
             "exit": {"time": -1, "status": "failed"}
         },
         {
             "name": "/home/evaluation/evaluation/pub/bench/XCSP18/NurseRostering/NurseRostering-20_c18",
-            "results": [],
+            "stats": [],
             "exit": {"time": -1, "status": "failed"}
         },
         {
             "name": "/home/evaluation/evaluation/pub/bench/XCSP18/Rlfap/Rlfap-opt/Rlfap-scen-03-opt_c18",
-            "results": [{"bound":32,"time":36},{"bound":30,"time":68},{"bound":28,"time":93},{"bound":26,"time":139},{"bound":24,"time":157},{"bound":22,"time":180},{"bound":20,"time":221},{"bound":18,"time":260}],
+            "stats": [{"bound":32,"time":36},{"bound":30,"time":68},{"bound":28,"time":93},{"bound":26,"time":139},{"bound":24,"time":157},{"bound":22,"time":180},{"bound":20,"time":221},{"bound":18,"time":260}],
             "exit": {"time": -1, "status": "stop"}
         },
         {
             "name": "/home/evaluation/evaluation/pub/bench/XCSP18/Rlfap/Rlfap-opt/Rlfap-scen-05-opt_c18",
-            "results": [{"bound":792,"time":5}],
+            "stats": [{"bound":792,"time":5}],
             "exit": {"time": 5, "status": "terminated"}
         }
     ]
