@@ -36,9 +36,9 @@ def inner_main(ref_file_path: str, comp_file_path: str, output_path: str, reposi
     comp_file.close()
 
     # Rest of the program
-    shared_main(comp_file_path, 'hashref', 'hashcomp', ref_content, comp_content, output_path, repository_url, similar_percent_limit)
+    shared_main(comp_file_path, ref_content, comp_content, output_path, repository_url, similar_percent_limit)
 
-def shared_main(input_file_path: str, hashref: str, hashcomp: str, ref_content, comp_content, output_path: str, repository_url: str, similar_percent_limit: float=1):
+def shared_main(input_file_path: str, ref_content, comp_content, output_path: str, repository_url: str, similar_percent_limit: float=1):
     # Comparison
     comp = comparator.Comparator(ref_content, comp_content)
     comp_results = comp.compare()
@@ -48,14 +48,16 @@ def shared_main(input_file_path: str, hashref: str, hashcomp: str, ref_content, 
         test_folder_path=comp_content["metadata"]["testFolderPath"],
         page_title=comp_content["metadata"]["pageTitle"],
         page_description=comp_content["metadata"]["pageDescription"],
+        code_commit=comp_content["metadata"]["codeCommit"],
     )
     settings = PageGenSettings(
         test_output_metadata=metadata,
         repository_url=repository_url,
         similar_percent_limit=similar_percent_limit,
+        ref_code_commit=ref_content["metadata"]["codeCommit"],
     )
     page_gen_input_data = PageGenInputData(settings, comp_results)
-    pagegen.generate_page(os.path.basename(input_file_path), hashref, hashcomp, output_path, page_gen_input_data)
+    pagegen.generate_page(os.path.basename(input_file_path), output_path, page_gen_input_data)
 
 if __name__ == "__main__":
     main()

@@ -2,7 +2,8 @@
     "metadata": {
         "testFolderPath": "/home/evaluation/evaluation/pub/bench/",
         "pageTitle": "A new title",
-        "pageDescription": "A new description."
+        "pageDescription": "A new description.",
+        "codeCommit": "614c0134750071ffe08dc376e9cc8caf210974bf"
     },
     "results": []
 }

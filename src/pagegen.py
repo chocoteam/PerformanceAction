@@ -4,7 +4,7 @@ from io import TextIOWrapper
 
 from models import PageGenInputData, PageGenSettings, TestResult, Diff
 
-def generate_page(tests_output_file_name: str, commit1: str, commit2: str, output_file_folder: str, input_data: PageGenInputData):
+def generate_page(tests_output_file_name: str, output_file_folder: str, input_data: PageGenInputData):
     """Generates a [Hugo](https://gohugo.io/) page displaying variation between test results.
 
     Args:
@@ -26,7 +26,7 @@ def generate_page(tests_output_file_name: str, commit1: str, commit2: str, outpu
     file = __open_page_file(tests_output_file_name, output_file_folder)
 
     # Write Hugo Front Matter
-    __write_front_matter(file, commit1, commit2, input_data.settings)
+    __write_front_matter(file, input_data.settings)
 
     # Create file content
     for key, value in processed_data.items():
@@ -92,16 +92,16 @@ def __open_page_file(tests_output_file_name: str, output_file_folder: str):
     output_file_path = os.path.join(output_file_folder, output_file_name)
     return open(output_file_path, "w", encoding="utf-8")
 
-def __write_front_matter(file: TextIOWrapper, commit1: str, commit2: str, settings: PageGenSettings):
+def __write_front_matter(file: TextIOWrapper, settings: PageGenSettings):
     """Writes [Hugo Front Matter](heading) in a file.
 
     Args:
         file (TextIOWrapper): A file
-        commit1 (str): Hash value of reference commit for test results variation
-        commit2 (str): Hash value of compared commit (actual one)
         settings (PageGenSettings): Metadata used to generate the page
     """
 
+    commit1 = settings.ref_code_commit
+    commit2 = settings.test_output_metadata.code_commit
     file.write(f'''---
 title: "{settings.test_output_metadata.page_title}"
 date: {datetime.datetime.now().astimezone().isoformat()}
