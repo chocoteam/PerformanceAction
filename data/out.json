@@ -4,12 +4,12 @@
         "pageTitle": "Optimization benchmarks",
         "pageDescription": "Benchmarks of tests ran in optimization scheme.",
         "codeRepo": "https://github.com/chocoteam/choco-solver",
-        "codeCommit": "06dff9c3a8eb75a632c9ea1285cc63ca0579df2e"
+        "codeCommit": "13a4c1dca0dd58d62acc741866fb945f3fe81592"
     },
     "results": [
         {
             "name": "/home/evaluation/evaluation/pub/bench/XCSP18/CrosswordDesign/CrosswordDesign-03-4-rom_c18",
-            "stats": [{"bound":9,"time":0},{"bound":11,"time":0}],
+            "stats": [{"bound":9,"time":0},{"bound":12,"time":0}],
             "exit": {"time": 0, "status": "terminated"}
         },
         {
@@ -35,7 +35,7 @@
         {
             "name": "/home/evaluation/evaluation/pub/bench/XCSP18/Rlfap/Rlfap-opt/Rlfap-scen-05-opt_c18",
             "stats": [{"bound":792,"time":5}],
-            "exit": {"time": 6, "status": "terminated"}
+            "exit": {"time": 5, "status": "terminated"}
         }
     ]
 }
