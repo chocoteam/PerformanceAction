@@ -11,9 +11,17 @@
             "name": "/home/evaluation/evaluation/pub/bench/lorem/ipsum/1",
             "stats": [
                 {"bound": 9, "time": 0},
-                {"bound": 12, "time": 5}
+                {"bound": 14, "time": 7}
             ],
             "exit": {"time": 6, "status": "terminated"}
+        },
+        {
+            "name": "/home/evaluation/evaluation/pub/bench/lorem/ipsum/3",
+            "stats": [
+                {"bound": 15, "time": 2},
+                {"bound": 17, "time": 4}
+            ],
+            "exit": {"time": 4, "status": "terminated"}
         },
         {
             "name": "/home/evaluation/evaluation/pub/bench/lorem/ipsum/2",
@@ -24,14 +32,6 @@
             "name": "/home/evaluation/evaluation/pub/bench/lorem/ipsum/4",
             "stats": [],
             "exit": {"time": -1, "status": "failed"}
-        },
-        {
-            "name": "/home/evaluation/evaluation/pub/bench/lorem/ipsum/3",
-            "stats": [
-                {"bound": 15, "time": 2},
-                {"bound": 17, "time": 3}
-            ],
-            "exit": {"time": 4, "status": "terminated"}
         }
     ]
 }

@@ -12,7 +12,7 @@ env:
   #WEBSITE_BRANCH: 'master'
   GITHUB_TEAM: 'RemiBardon'
   WEBSITE_REPO: 'chocoteam-website'
-  WEBSITE_BRANCH: 'main'
+  WEBSITE_BRANCH: 'master'
   OUTPUT_PATH: 'content/en/docs/Benchmarks'
   COMMITTER_NAME: 'Performance Action'
   COMMITTER_EMAIL: 'performance-action@choco-solver.org'
