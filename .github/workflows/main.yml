@@ -66,5 +66,5 @@ jobs:
           git add $OUTPUT_PATH
           git config --global user.name "$COMMITTER_NAME"
           git config --global user.email "$COMMITTER_EMAIL"
-          git commit -m "$COMMIT_MESSAGE ($GITHUB_RUN_ID)"
+          git commit -m "$COMMIT_MESSAGE (`$GITHUB_RUN_ID`)"
           git push origin $WEBSITE_BRANCH
