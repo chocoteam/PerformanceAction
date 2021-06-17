@@ -7,21 +7,14 @@ on:
 
 env:
   TRACKED_JSON_PATH: './data'
-  #GITHUB_TEAM: 'chocoteam'
-  #WEBSITE_REPO: 'website'
-  #WEBSITE_BRANCH: 'master'
-  GITHUB_TEAM: 'RemiBardon'
-  WEBSITE_REPO: 'chocoteam-website'
+  GITHUB_TEAM: 'chocoteam'
+  WEBSITE_REPO: 'website'
   WEBSITE_BRANCH: 'master'
   OUTPUT_PATH: 'content/en/docs/Benchmarks'
   COMMITTER_NAME: 'Performance Action'
   COMMITTER_EMAIL: 'performance-action@choco-solver.org'
   COMMIT_MESSAGE: '🚀 Results of performance action'
-  #API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
-  # Hard-coded token for tests (will be deleted)
-  # Technique de charlatan
-  API_TOKEN_GITHUB_1: p_Z8NAlZNrJa
-  API_TOKEN_GITHUB_2: eNHj3K024fU09EEXbDqx2wXEgr
+  API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -40,7 +33,7 @@ jobs:
       # Clones the website repository
       # Note: Name must not conflict with folders in this repository
       - name: Clone website repository
-        run: git clone https://x-access-token:gh$API_TOKEN_GITHUB_1$API_TOKEN_GITHUB_2@github.com/$GITHUB_TEAM/$WEBSITE_REPO
+        run: git clone https://x-access-token:$API_TOKEN_GITHUB@github.com/$GITHUB_TEAM/$WEBSITE_REPO
 
       # Sets up Python
       - name: Set up Python 3.8
