@@ -16,7 +16,7 @@ env:
   OUTPUT_PATH: 'content/en/docs/Benchmarks'
   COMMITTER_NAME: 'Performance Action'
   COMMITTER_EMAIL: 'performance-action@choco-solver.org'
-  COMMIT_MESSAGE: '🚀 Results of performance action ${{ GITHUB_ACTION }}'
+  COMMIT_MESSAGE: '🚀 Results of performance action ${{ $GITHUB_ACTION }}'
   #API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
   # Hard-coded token for tests (will be deleted)
   # Technique de charlatan
