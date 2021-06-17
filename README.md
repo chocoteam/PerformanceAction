@@ -87,6 +87,7 @@ The test results files must be formatted in JSON. They have a simple structure:
   - `"testFolderPath"`: Path of folder where test input files are located. Used to remove the path prefix from absolute file paths
   - `"pageTitle"`: Title of the generated Hugo page
   - `"pageDescription"`: Description of the generated Hugo page
+  - `"codeRepo"`: URL of the tested code repository (for commit hyperlinks)
   - `"codeCommit"`: Hash of the commit used to run tests (in the main repository, where the code change originated)
 - A `"results"` key corresponding to an array of test results
 
