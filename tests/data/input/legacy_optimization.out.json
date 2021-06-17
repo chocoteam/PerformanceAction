@@ -3,6 +3,7 @@
         "testFolderPath": "/home/old/path/to/test/folder/",
         "pageTitle": "Some legacy title",
         "pageDescription": "This is a file generated a while ago with different metadata.",
+        "codeRepo": "https://github.com/chocoteam/choco-solver",
         "codeCommit": "13a4c1dca0dd58d62acc741866fb945f3fe81592"
     },
     "results": []

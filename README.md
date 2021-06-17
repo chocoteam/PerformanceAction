@@ -89,7 +89,12 @@ The test results files must be formatted in JSON. They have a simple structure:
   - `"pageDescription"`: Description of the generated Hugo page
   - `"codeRepo"`: URL of the tested code repository (for commit hyperlinks)
   - `"codeCommit"`: Hash of the commit used to run tests (in the main repository, where the code change originated)
-- A `"results"` key corresponding to an array of test results
+- A `"results"` key corresponding to an array of test results. Each contains the following keys:
+  - `"name"`: Name of the test result
+  - `"stats"`: Results for this test, as a JSON object
+  - `"exit"`: Exit information, as a JSON object that contains the following keys:
+    - `"time"`: Execution time 
+    - `"status"`: Exit status
 
 What we call a "test result" is the result of a test run with an input file.
 The path to this input file must be unique as it determines the way the test result will be displayed on the website.
