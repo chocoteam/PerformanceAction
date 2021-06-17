@@ -7,7 +7,6 @@ on:
 
 env:
   TRACKED_JSON_PATH: './data'
-  CODE_REPO: 'https://github.com/chocoteam/choco-solver'
   #GITHUB_TEAM: 'chocoteam'
   #WEBSITE_REPO: 'website'
   #WEBSITE_BRANCH: 'master'
@@ -57,7 +56,7 @@ jobs:
         run: |
           COMMIT_REF=$(git log -n 1 --skip 1 --pretty=format:%H ${TRACKED_JSON_PATH})
           COMMIT_COMP=$GITHUB_SHA
-          python ./src/action.py $COMMIT_REF $COMMIT_COMP -d $TRACKED_JSON_PATH -o $REL_OUTPUT_PATH --code-repo $CODE_REPO
+          python ./src/action.py $COMMIT_REF $COMMIT_COMP -d $TRACKED_JSON_PATH -o $REL_OUTPUT_PATH
           # cat $REL_OUTPUT_PATH/*.md # Print files for debug purposes
 
       # Pushes the created files

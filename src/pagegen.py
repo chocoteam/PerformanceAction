@@ -52,7 +52,7 @@ def __process_input_data(input_data: PageGenInputData):
     processed_data = {}
 
     # Get file path prefix to remove when generating the dictionary structure
-    prefix = input_data.settings.test_output_metadata.test_folder_path
+    prefix = input_data.settings.comp_test_metadata.test_folder_path
 
     # Populate the dictionary
     for test_result in input_data.results:
@@ -101,18 +101,19 @@ def __write_front_matter(file: TextIOWrapper, settings: PageGenSettings):
     """
 
     # Remove trailing `/` in repository URL if needed
-    settings.repository_url = settings.repository_url.rstrip('/')
+    settings.ref_test_metadata.repository_url = settings.ref_test_metadata.repository_url.rstrip('/')
+    settings.comp_test_metadata.repository_url = settings.comp_test_metadata.repository_url.rstrip('/')
 
-    commit1 = settings.ref_code_commit
-    commit2 = settings.test_output_metadata.code_commit
+    commit1 = settings.ref_test_metadata.code_commit
+    commit2 = settings.comp_test_metadata.code_commit
     file.write(f'''---
-title: "{settings.test_output_metadata.page_title}"
+title: "{settings.comp_test_metadata.page_title}"
 date: {datetime.datetime.now().astimezone().isoformat()}
 weight: 1
 description: >
-  {settings.test_output_metadata.page_description}
+  {settings.comp_test_metadata.page_description}
 
-  Results of [`{commit2[0:7]}`]({settings.repository_url}/commit/{commit2}) are compared with [`{commit1[0:7]}`]({settings.repository_url}/commit/{commit1}).
+  Results of [`{commit2[0:7]}`]({settings.comp_test_metadata.repository_url}/commit/{commit2}) are compared with [`{commit1[0:7]}`]({settings.ref_test_metadata.repository_url}/commit/{commit1}).
 ---''')
 
 def __pretty_variation(diff: Diff, settings: PageGenSettings):

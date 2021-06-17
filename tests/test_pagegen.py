@@ -7,14 +7,20 @@ def test_with_data():
     output_file_folder: str = './tests/.out/'
     input_data = PageGenInputData(
         PageGenSettings(
-            TestOutputMetadata(
+            ref_test_metadata=TestOutputMetadata(
                 test_folder_path='/home/evaluation/evaluation/pub/bench/',
                 page_title='Title',
                 page_description='Description',
+                repository_url='https://github.com/chocoteam/choco-solver',
+                code_commit='13a4c1dca0dd58d62acc741866fb945f3fe81592',
+            ),
+            comp_test_metadata=TestOutputMetadata(
+                test_folder_path='/home/evaluation/evaluation/pub/bench/',
+                page_title='Title',
+                page_description='Description',
+                repository_url='https://github.com/chocoteam/choco-solver',
                 code_commit='614c0134750071ffe08dc376e9cc8caf210974bf',
             ),
-            ref_code_commit='13a4c1dca0dd58d62acc741866fb945f3fe81592',
-            repository_url='https://github.com/chocoteam/choco-solver',
         ),
         [
             TestResult(
@@ -67,14 +73,20 @@ def test_failure_color():
     output_file_folder: str = './tests/.out/'
     input_data = PageGenInputData(
         PageGenSettings(
-            TestOutputMetadata(
+            ref_test_metadata=TestOutputMetadata(
                 test_folder_path='/home/evaluation/evaluation/pub/bench/',
                 page_title='Title',
                 page_description='Description',
+                repository_url='https://github.com/chocoteam/choco-solver',
+                code_commit='13a4c1dca0dd58d62acc741866fb945f3fe81592',
+            ),
+            comp_test_metadata=TestOutputMetadata(
+                test_folder_path='/home/evaluation/evaluation/pub/bench/',
+                page_title='Title',
+                page_description='Description',
+                repository_url='https://github.com/chocoteam/choco-solver',
                 code_commit='614c0134750071ffe08dc376e9cc8caf210974bf',
             ),
-            ref_code_commit='13a4c1dca0dd58d62acc741866fb945f3fe81592',
-            repository_url='https://github.com/chocoteam/choco-solver',
         ),
         [
             TestResult(
@@ -108,14 +120,20 @@ def test_rounded_percentages():
     output_file_folder: str = './tests/.out/'
     input_data = PageGenInputData(
         PageGenSettings(
-            TestOutputMetadata(
+            ref_test_metadata=TestOutputMetadata(
                 test_folder_path='/home/evaluation/evaluation/pub/bench/',
                 page_title='Title',
                 page_description='Description',
+                repository_url='https://github.com/chocoteam/choco-solver',
+                code_commit='13a4c1dca0dd58d62acc741866fb945f3fe81592',
+            ),
+            comp_test_metadata=TestOutputMetadata(
+                test_folder_path='/home/evaluation/evaluation/pub/bench/',
+                page_title='Title',
+                page_description='Description',
+                repository_url='https://github.com/chocoteam/choco-solver',
                 code_commit='614c0134750071ffe08dc376e9cc8caf210974bf',
             ),
-            ref_code_commit='13a4c1dca0dd58d62acc741866fb945f3fe81592',
-            repository_url='https://github.com/chocoteam/choco-solver',
         ),
         [
             TestResult(
@@ -138,14 +156,20 @@ def test_table_hidden_if_no_result():
     output_file_folder: str = './tests/.out/'
     input_data = PageGenInputData(
         PageGenSettings(
-            TestOutputMetadata(
+            ref_test_metadata=TestOutputMetadata(
                 test_folder_path='/home/evaluation/evaluation/pub/bench/',
                 page_title='Title',
                 page_description='Description',
+                repository_url='https://github.com/chocoteam/choco-solver',
+                code_commit='13a4c1dca0dd58d62acc741866fb945f3fe81592',
+            ),
+            comp_test_metadata=TestOutputMetadata(
+                test_folder_path='/home/evaluation/evaluation/pub/bench/',
+                page_title='Title',
+                page_description='Description',
+                repository_url='https://github.com/chocoteam/choco-solver',
                 code_commit='614c0134750071ffe08dc376e9cc8caf210974bf',
             ),
-            ref_code_commit='13a4c1dca0dd58d62acc741866fb945f3fe81592',
-            repository_url='https://github.com/chocoteam/choco-solver',
         ),
         [
             TestResult(
@@ -167,14 +191,20 @@ def test_show_both_commits_in_description():
     output_file_folder: str = './tests/.out/'
     input_data = PageGenInputData(
         PageGenSettings(
-            TestOutputMetadata(
+            ref_test_metadata=TestOutputMetadata(
                 test_folder_path='/home/evaluation/evaluation/pub/bench/',
                 page_title='Title',
                 page_description='Description',
+                repository_url='https://github.com/chocoteam/choco-solver',
+                code_commit='13a4c1dca0dd58d62acc741866fb945f3fe81592',
+            ),
+            comp_test_metadata=TestOutputMetadata(
+                test_folder_path='/home/evaluation/evaluation/pub/bench/',
+                page_title='Title',
+                page_description='Description',
+                repository_url='https://github.com/chocoteam/choco-solver',
                 code_commit='614c0134750071ffe08dc376e9cc8caf210974bf',
             ),
-            ref_code_commit='13a4c1dca0dd58d62acc741866fb945f3fe81592',
-            repository_url='https://github.com/chocoteam/choco-solver',
         ),
         [],
     )
@@ -189,14 +219,20 @@ def test_metadata_are_used_to_generate_front_matter():
     output_file_folder: str = './tests/.out/'
     input_data = PageGenInputData(
         PageGenSettings(
-            TestOutputMetadata(
+            ref_test_metadata=TestOutputMetadata(
                 test_folder_path='/home/evaluation/evaluation/pub/bench/',
                 page_title='Title',
                 page_description='Description',
+                repository_url='https://github.com/chocoteam/choco-solver',
+                code_commit='abcdefghij',
+            ),
+            comp_test_metadata=TestOutputMetadata(
+                test_folder_path='/home/evaluation/evaluation/pub/bench/',
+                page_title='Title',
+                page_description='Description',
+                repository_url='http://wesite.com/repository/',
                 code_commit='1234567890',
             ),
-            ref_code_commit='abcdefghij',
-            repository_url='http://wesite.com/repository/',
             similar_percent_limit=50,
         ),
         [
@@ -213,5 +249,5 @@ def test_metadata_are_used_to_generate_front_matter():
     file_content = f.read()
     assert 'title: "Title"' in file_content
     assert 'description: >\n  Description\n\n  Results of' in file_content
-    assert 'Results of [`1234567`](http://wesite.com/repository/commit/1234567890) are compared with [`abcdefg`](http://wesite.com/repository/commit/abcdefghij).' in file_content
+    assert 'Results of [`1234567`](http://wesite.com/repository/commit/1234567890) are compared with [`abcdefg`](https://github.com/chocoteam/choco-solver/commit/abcdefghij).' in file_content
     assert '≈ `-10` (`-20%`)' in file_content

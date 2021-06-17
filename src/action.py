@@ -27,13 +27,6 @@ def main():
         required=True,
     )
     parser.add_argument(
-        '--code-repo',
-        metavar='REPOSITORY_URL',
-        dest='repository_url',
-        help='URL of the tested code repository (for commit hyperlinks)',
-        required=True,
-    )
-    parser.add_argument(
         '--limit', 
         metavar='SIMILAR_PERCENT_LIMIT',
         dest='similar_percent_limit',
@@ -42,7 +35,6 @@ def main():
         default=1,
     )
     args = parser.parse_args()
-    # python src/action.py 57287e71 39f252ba -d ./data/ -o ./.out --code-repo https://github.com/chocoteam/choco-solver
 
     tracked_dir = os.path.abspath(args.tracked_dir)
     hash_ref = args.hash_ref
@@ -72,7 +64,7 @@ def main():
             comp_content = comp_file.parse()
 
             # Rest of the program
-            shared_main(file_path, ref_content, comp_content, output_path, args.repository_url, args.similar_percent_limit)
+            shared_main(file_path, ref_content, comp_content, output_path, args.similar_percent_limit)
 
         print('-' * 48)
         print(f'Results have been written in {output_path}')
