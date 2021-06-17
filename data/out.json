@@ -13,7 +13,7 @@
                 {"bound": 9, "time": 0},
                 {"bound": 14, "time": 7}
             ],
-            "exit": {"time": 6, "status": "terminated"}
+            "exit": {"time": 8, "status": "terminated"}
         },
         {
             "name": "/home/evaluation/evaluation/pub/bench/lorem/ipsum/3",
