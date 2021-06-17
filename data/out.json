@@ -3,6 +3,7 @@
         "testFolderPath": "/home/evaluation/evaluation/pub/bench/",
         "pageTitle": "Optimization benchmarks 2",
         "pageDescription": "Benchmarks of tests ran in optimization scheme.",
+        "codeRepo": "https://github.com/chocoteam/choco-solver",
         "codeCommit": "13a4c1dca0dd58d62acc741866fb945f3fe81592"
     },
     "results": [
@@ -10,22 +11,22 @@
             "name": "/home/evaluation/evaluation/pub/bench/lorem/ipsum/1",
             "stats": [
                 {"bound": 9, "time": 0},
-                {"bound": 12, "time": 5}
+                {"bound": 14, "time": 7}
             ],
             "exit": {"time": 6, "status": "terminated"}
-        },
-        {
-            "name": "/home/evaluation/evaluation/pub/bench/lorem/ipsum/2",
-            "stats": [],
-            "exit": {"time": -1, "status": "failed"}
         },
         {
             "name": "/home/evaluation/evaluation/pub/bench/lorem/ipsum/3",
             "stats": [
                 {"bound": 15, "time": 2},
-                {"bound": 18, "time": 3}
+                {"bound": 17, "time": 4}
             ],
             "exit": {"time": 4, "status": "terminated"}
+        },
+        {
+            "name": "/home/evaluation/evaluation/pub/bench/lorem/ipsum/2",
+            "stats": [],
+            "exit": {"time": -1, "status": "failed"}
         },
         {
             "name": "/home/evaluation/evaluation/pub/bench/lorem/ipsum/4",
