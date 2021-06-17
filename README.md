@@ -34,7 +34,7 @@ The program can be used in different ways: from a GitHub Action or on a local ma
      <summary>Tip: Run <code>python action.py -h</code> for help about required arguments.</summary>
 
      ```text
-     usage: action.py [-h] -d TRACKED_DIR -o OUTPUT_PATH --code-repo REPOSITORY_URL [--limit SIMILAR_PERCENT_LIMIT] hash_ref hash_comp
+     usage: action.py [-h] -d TRACKED_DIR -o OUTPUT_PATH [--limit SIMILAR_PERCENT_LIMIT] hash_ref hash_comp
 
      positional arguments:
        hash_ref              Hash value of commit to compare against (reference commit)
@@ -46,8 +46,6 @@ The program can be used in different ways: from a GitHub Action or on a local ma
                              Path to directory to check for changes
        -o OUTPUT_PATH, --output OUTPUT_PATH
                              Path of folder to output the generated page
-       --code-repo REPOSITORY_URL
-                             URL of the tested code repository (for commit hyperlinks)
        --limit SIMILAR_PERCENT_LIMIT
                              Maximum percentage signifying similarity. It must be positive, as it will be checked for both lower and higher values. If not set, it
                              will default to 1%
@@ -64,7 +62,7 @@ The program can be used in different ways: from a GitHub Action or on a local ma
      <summary>Tip: Run <code>python main.py -h</code> for help about required arguments.</summary>
 
      ```text
-     usage: main.py [-h] -o OUTPUT_PATH --code-repo REPOSITORY_URL [--limit SIMILAR_PERCENT_LIMIT] ref_file_path comp_file_path
+     usage: main.py [-h] -o OUTPUT_PATH [--limit SIMILAR_PERCENT_LIMIT] ref_file_path comp_file_path
 
      positional arguments:
        ref_file_path         Path to JSON file to compare against (reference file)
@@ -74,8 +72,6 @@ The program can be used in different ways: from a GitHub Action or on a local ma
        -h, --help            show this help message and exit
        -o OUTPUT_PATH, --output OUTPUT_PATH
                              Path of folder to output the generated page
-       --code-repo REPOSITORY_URL
-                             URL of the tested code repository (for commit hyperlinks)
        --limit SIMILAR_PERCENT_LIMIT
                              Maximum percentage signifying similarity. It must be positive, as it will be checked for both lower and higher values. If not set, it
                              will default to 1%
