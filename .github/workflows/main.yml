@@ -16,7 +16,7 @@ env:
   OUTPUT_PATH: 'content/en/docs/Benchmarks'
   COMMITTER_NAME: 'Performance Action'
   COMMITTER_EMAIL: 'performance-action@choco-solver.org'
-  COMMIT_MESSAGE: '🚀 Results of performance action ${{ $GITHUB_ACTION }}'
+  COMMIT_MESSAGE: '🚀 Results of performance action'
   #API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
   # Hard-coded token for tests (will be deleted)
   # Technique de charlatan
@@ -66,5 +66,5 @@ jobs:
           git add $OUTPUT_PATH
           git config --global user.name "$COMMITTER_NAME"
           git config --global user.email "$COMMITTER_EMAIL"
-          git commit -m "$COMMIT_MESSAGE"
+          git commit -m "$COMMIT_MESSAGE ($GITHUB_ACTION)"
           git push origin $WEBSITE_BRANCH
